@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html lang="en-us" data-theme="">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="theme-name" content="Anubis2">
+
+<title>puctf25 - qslg154</title>
+
+<meta name="description" content="
+
+    
+        #
+    
+    Simple RSA
+
+
+We are given the following code:
+from Crypto.Util.number import *
+from sympy import *
+p = getPrime(1024)
+q = getPrime(1024)
+n = p * q
+phi_n = (p - 1) * (q - 1)
+
+o = getPrime(11)
+print(o)
+while (o).bit_length() &lt;= 256:
+    o = nextprime(o**2-o*2&#43;o//114514)
+    
+e = 65537
+d = inverse(e, phi_n)
+message = b&#39;flag{n0t_a_flag}&#39;#not a flag, please dont submit it.
+m = bytes_to_long(message)
+c = pow(m, e, n)
+leak = p // o
+print(f&#34;{leak = }\n{e = }\n{n = }\n{c = }&#34;)
+So, we are given $ N, e, c $, and $\textrm{leak} = \lfloor\dfrac{p}{o}\rfloor$, lets look at the function that generates $o$">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="//localhost:1313/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="//localhost:1313/favicon.png">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.4c42aa0abeac804c4933c54677c449cea1f723caae778425d031e98565a0cdef.css" integrity="sha256-TEKqCr6sgExJM8VGd8RJzqH3I8qud4Ql0DHphWWgze8=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.9c1888ebff42c0224ce04dac10cb2c401f1b77f54f78e8d87d73c3bed781c263.css" integrity="sha256-nBiI6/9CwCJM4E2sEMssQB8bd/VPeOjYfXPDvteBwmM=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.acd606c0fce58853afe0248d37bb41acbbcdd8b1aca2412b6c0fa760da0137f3.css" integrity="sha256-rNYGwPzliFOv4CSNN7tBrLvN2LGsokErbA&#43;nYNoBN/M=">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <script src="/js/script.672e2309c296e07c18bcd08b28d797a56222ff941d65f308fba3158c44885b14.js" type="text/javascript" charset="utf-8" integrity="sha256-Zy4jCcKW4HwYvNCLKNeXpWIi/5QdZfMI&#43;6MVjESIWxQ="></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header">
+            
+                <div class="header-top">
+    <div class="header-top-left">
+        <h1 class="site-title noselect">
+    <a href="//localhost:1313/">qslg154</a>
+</h1>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+    
+        <div class="theme-switcher">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-sun-high"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg>
+
+
+</span>
+
+        </div>
+    
+
+    <script>
+        const STORAGE_KEY = 'user-color-scheme'
+        const defaultTheme = "light"
+
+        let currentTheme
+        let switchButton
+        let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+        function switchTheme(e) {
+            currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            if (localStorage) localStorage.setItem(STORAGE_KEY, currentTheme);
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        const autoChangeScheme = e => {
+            currentTheme = e.matches ? 'dark' : 'light'
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            switchButton = document.querySelector('.theme-switcher')
+            currentTheme = detectCurrentScheme()
+
+            if (currentTheme === 'auto') {
+                autoChangeScheme(autoDefinedScheme);
+                autoDefinedScheme.addListener(autoChangeScheme);
+            } else {
+                document.documentElement.setAttribute('data-theme', currentTheme)
+            }
+
+            if (switchButton) {
+                switchButton.addEventListener('click', switchTheme, false)
+            }
+
+            showContent();
+        })
+
+        function detectCurrentScheme() {
+            if (localStorage !== null && localStorage.getItem(STORAGE_KEY)) {
+                return localStorage.getItem(STORAGE_KEY)
+            }
+            if (defaultTheme) {
+                return defaultTheme
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function showContent() {
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = 1;
+        }
+
+        function changeGiscusTheme (theme) {
+            function sendMessage(message) {
+              const iframe = document.querySelector('iframe.giscus-frame');
+              if (!iframe) return;
+              iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+            }
+
+            sendMessage({
+              setConfig: {
+                theme: theme
+              }
+            });
+        }
+    </script>
+
+
+        <ul class="social-icons noselect">
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+    <li>
+            <a href="/index.xml" title="RSS" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M4 4a16 16 0 0 1 16 16" /><path d="M4 11a9 9 0 0 1 9 9" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+
+    </div>
+    <div class="header-top-right">
+
+    </div>
+</div>
+
+
+    <nav class="noselect">
+        
+        
+        <a class="" href="//localhost:1313/" title="">Home</a>
+        
+        <a class="" href="//localhost:1313/about/" title="">About</a>
+        
+        <a class="" href="//localhost:1313/tags/" title="">Tags</a>
+        
+        <a class="" href="//localhost:1313/posts/" title="">Archive</a>
+        
+    </nav>
+
+
+
+
+
+
+
+
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1">
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                
+                
+                
+                <h1 class="p-name post-title ">puctf25</h1>
+                
+
+            </header>
+            
+
+
+
+<div class="post-info noselect">
+    
+        <div class="post-date dt-published">
+            <time datetime="2025-04-22">2025-04-22</time>
+            
+        </div>
+    
+
+    <a class="post-hidden-url u-url" href="/posts/puctf25/">/posts/puctf25/</a>
+    <a href="//localhost:1313/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
+
+
+    <div class="post-taxonomies">
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+        
+
+  
+  
+
+
+
+
+  
+  
+  
+  <details class="toc noselect">
+    <summary>Table of Contents</summary>
+    <div class="inner"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#simple-rsa">Simple RSA</a>
+      <ul>
+        <li><a href="#solve-script">Solve Script</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  </details>
+  
+
+
+
+<script>
+  var toc = document.querySelector(".toc");
+  if (toc) {
+    toc.addEventListener("click", function () {
+      if (event.target.tagName !== "A") {
+        event.preventDefault();
+        if (this.open) {
+          this.open = false;
+          this.classList.remove("expanded");
+        } else {
+          this.open = true;
+          this.classList.add("expanded");
+        }
+      }
+    });
+  }
+</script>
+
+        <div class="content e-content">
+            <h2 id="simple-rsa" >
+<div>
+    <a href="#simple-rsa">
+        #
+    </a>
+    Simple RSA
+</div>
+</h2>
+<p>We are given the following code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">Crypto.Util.number</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">sympy</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">1024</span>)
+</span></span><span style="display:flex;"><span>q <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">1024</span>)
+</span></span><span style="display:flex;"><span>n <span style="color:#99d1db;font-weight:bold">=</span> p <span style="color:#99d1db;font-weight:bold">*</span> q
+</span></span><span style="display:flex;"><span>phi_n <span style="color:#99d1db;font-weight:bold">=</span> (p <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>) <span style="color:#99d1db;font-weight:bold">*</span> (q <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>o <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">11</span>)
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(o)
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">while</span> (o)<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">&lt;=</span> <span style="color:#ef9f76">256</span>:
+</span></span><span style="display:flex;"><span>    o <span style="color:#99d1db;font-weight:bold">=</span> nextprime(o<span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">-</span>o<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">+</span>o<span style="color:#99d1db;font-weight:bold">//</span><span style="color:#ef9f76">114514</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>e <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">65537</span>
+</span></span><span style="display:flex;"><span>d <span style="color:#99d1db;font-weight:bold">=</span> inverse(e, phi_n)
+</span></span><span style="display:flex;"><span>message <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#e78284">b</span><span style="color:#a6d189">&#39;flag</span><span style="color:#a6d189">{n0t_a_flag}</span><span style="color:#a6d189">&#39;</span><span style="color:#737994;font-style:italic">#not a flag, please dont submit it.</span>
+</span></span><span style="display:flex;"><span>m <span style="color:#99d1db;font-weight:bold">=</span> bytes_to_long(message)
+</span></span><span style="display:flex;"><span>c <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">pow</span>(m, e, n)
+</span></span><span style="display:flex;"><span>leak <span style="color:#99d1db;font-weight:bold">=</span> p <span style="color:#99d1db;font-weight:bold">//</span> o
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>leak <span style="color:#a6d189">= }</span><span style="color:#8caaee">\n</span><span style="color:#a6d189">{</span>e <span style="color:#a6d189">= }</span><span style="color:#8caaee">\n</span><span style="color:#a6d189">{</span>n <span style="color:#a6d189">= }</span><span style="color:#8caaee">\n</span><span style="color:#a6d189">{</span>c <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span></code></pre></div><p>So, we are given $ N, e, c $, and $\textrm{leak} = \lfloor\dfrac{p}{o}\rfloor$, lets look at the function that generates $o$</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>o <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">11</span>)
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(o)
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">while</span> (o)<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">&lt;=</span> <span style="color:#ef9f76">256</span>:
+</span></span><span style="display:flex;"><span>    o <span style="color:#99d1db;font-weight:bold">=</span> nextprime(o<span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">-</span>o<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">+</span>o<span style="color:#99d1db;font-weight:bold">//</span><span style="color:#ef9f76">114514</span>)
+</span></span></code></pre></div><p>Notice that it always gives the same prime for the same $o$,
+and there is not much 11-bits prime, so we can compute a list of &lsquo;valid prime&rsquo; (and also $p$ being 1024 bits remove quite a lot of candidate)</p>
+<p>As we have $ p = o*\mathrm{leak} + r$, where $0 \leq r &lt; o$,
+the high bits of $p$ is known (r is at most 512 bits), and by division we also know the high bits of $q$.</p>
+<p>Thus, we recover $p, q$ by finding small roots of:
+$$ f(x) \equiv p_{0} + x \mod N $$
+Where $p_{0} = o * \mathrm{leak}$ (high-bits)</p>
+<h3 id="solve-script" >
+<div>
+    <a href="#solve-script">
+        ##
+    </a>
+    Solve Script
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">sympy</span> <span style="color:#81c8be">import</span> primerange, nextprime
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">itertools</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">sage.all</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">Crypto.Util.number</span> <span style="color:#81c8be">import</span> long_to_bytes
+</span></span><span style="display:flex;"><span>leak <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">229525247431466363396748275102452237017483263642522169261128751667989187920222008435622161668672680319265020826924898363797246088163131807007417337332041423382249493063935834785517141215433641671449250167739</span>
+</span></span><span style="display:flex;"><span>e <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">65537</span>
+</span></span><span style="display:flex;"><span>N <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">17025704278529140533197619058872107964603885171352958470782161585790646923613462427169605377962573690550003077944502986729950168203218576512437143589552349649890314114132388935297791479264474856372925671733285461978196754222965933817210721106702170295307603219397576847046759192020479770500017828804341172966533293934501006960910933984286076206122078711900394523398604314656667759888376961986467636693449867798201636673910015862849243971295148252698582382932750152690278887575775483163190714208620615229118952215929316581064268051206844316410022831489028834016890716903650147622453497156376010954937711580778837022469</span>
+</span></span><span style="display:flex;"><span>c <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">4311864582410592398515641714066873283092570704733020675963750579450257637396801223206341426893531099797594214045668072474903562439113832955200193436212644751996373439076678324763681163278101719366667984049870077881797884706037815176674610422261092056836443076281786595701983578205257329239382883147135302350155936540564053276147568707317016243971315327000403900352756697151928182279279493762662885952724394866309727689713017096764000001598640823401861386229340651593352706627537214109887503672810630361933303225654511778551426781731805269570319655873440569557336547739592527340843859243342095245931485340768963841785</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>l <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(primerange(<span style="color:#ef9f76">1024</span>, <span style="color:#ef9f76">2048</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">to_o</span>(o):
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> (o)<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">&lt;=</span> <span style="color:#ef9f76">256</span>:
+</span></span><span style="display:flex;"><span>        o <span style="color:#99d1db;font-weight:bold">=</span> nextprime(o<span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">-</span>o<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">+</span>o<span style="color:#99d1db;font-weight:bold">//</span><span style="color:#ef9f76">114514</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> o
+</span></span><span style="display:flex;"><span>l <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(<span style="color:#99d1db">map</span>(to_o, l)) <span style="color:#737994;font-style:italic"># get </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cdt <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> l:
+</span></span><span style="display:flex;"><span>	(p_low, p_high) <span style="color:#99d1db;font-weight:bold">=</span> i <span style="color:#99d1db;font-weight:bold">*</span> leak, i <span style="color:#99d1db;font-weight:bold">*</span> (leak <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> p_low<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">1024</span> <span style="color:#99d1db;font-weight:bold">or</span> p_high<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">1024</span>:
+</span></span><span style="display:flex;"><span>		cdt<span style="color:#99d1db;font-weight:bold">.</span>append((p_low, p_high))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">partial_p_upper</span>(p_upper: <span style="color:#99d1db">int</span>, N <span style="color:#99d1db;font-weight:bold">=</span> N) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">int</span>:
+</span></span><span style="display:flex;"><span>    PR<span style="color:#99d1db;font-weight:bold">.&lt;</span>x<span style="color:#99d1db;font-weight:bold">&gt;</span> <span style="color:#99d1db;font-weight:bold">=</span> Zmod(N)[]
+</span></span><span style="display:flex;"><span>    f <span style="color:#99d1db;font-weight:bold">=</span> x <span style="color:#99d1db;font-weight:bold">+</span> p_upper
+</span></span><span style="display:flex;"><span>    roots <span style="color:#99d1db;font-weight:bold">=</span> f<span style="color:#99d1db;font-weight:bold">.</span>small_roots(X<span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">^</span>(floor((N<span style="color:#99d1db;font-weight:bold">.</span>nbits() <span style="color:#99d1db;font-weight:bold">/</span> <span style="color:#ef9f76">4</span>) <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">6</span><span style="color:#99d1db;font-weight:bold">/</span><span style="color:#ef9f76">7</span>)), beta<span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">0.3</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> x0 <span style="color:#99d1db;font-weight:bold">in</span> roots:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> x0 <span style="color:#99d1db;font-weight:bold">+</span> p_upper
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> cdt:
+</span></span><span style="display:flex;"><span>	<span style="color:#99d1db">print</span>(partial_p_upper(i[<span style="color:#ef9f76">0</span>])) <span style="color:#737994;font-style:italic"># we recover p here</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>q <span style="color:#99d1db;font-weight:bold">=</span> N <span style="color:#99d1db;font-weight:bold">//</span> p
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">assert</span> p <span style="color:#99d1db;font-weight:bold">*</span> q <span style="color:#99d1db;font-weight:bold">==</span> N
+</span></span><span style="display:flex;"><span>phi <span style="color:#99d1db;font-weight:bold">=</span> (p<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>)<span style="color:#99d1db;font-weight:bold">*</span>(q<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>d <span style="color:#99d1db;font-weight:bold">=</span> inverse_mod(e, phi)
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(long_to_bytes(power_mod(c, d, N)))
+</span></span></code></pre></div>
+        </div>
+
+    </article>
+
+    
+    
+
+    
+        
+        
+    
+
+    
+
+    
+        
+
+
+    
+
+    
+
+    
+    
+    
+        <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+
+        </main>
+        
+            <footer class="common-footer noselect">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+
+        <div style="display: flex; align-items: center; gap:8px">
+            ©  qslg154,  2025
+            
+        </div>
+        <div style="display:flex; align-items: center; gap:4px">
+
+            
+            
+
+            
+            
+            
+            
+
+            
+            
+
+            
+        </div>
+        
+            <div>
+                Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/hugo-theme-anubis2/hugo-theme-anubis2">Anubis2</a>.<br>
+            </div>
+        
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=//localhost:1313/ class="p-name u-url url fn" rel="me">map[name:qslg154]</a>
+
+    
+
+    
+</p>
+
+</footer>
+
+        
+    </div>
+</body>
+</html>
