@@ -33,6 +33,10 @@ identifier = "archive"
 url = "/posts/"
 weight = 4
 
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
 [markup.goldmark.renderer]
 unsafe = true # Enable unsafe mode to have a better experience
 
