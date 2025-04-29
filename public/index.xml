@@ -13,7 +13,7 @@
     
 
     
-    <lastBuildDate>Tue, 22 Apr 2025 00:41:49 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 Apr 2025 00:22:49 +0800</lastBuildDate>
     
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -21,10 +21,24 @@
     <item>
       <title>About</title>
       <link>/about/</link>
-      <pubDate>Tue, 22 Apr 2025 00:41:49 +0800</pubDate>
+      <pubDate>Tue, 29 Apr 2025 00:22:49 +0800</pubDate>
       
       <guid>/about/</guid>
-      <description>&lt;p&gt;In construction.&lt;/p&gt;
+      <description>&lt;p&gt;Hi, I am a secondary school student from Hong Kong that is interested in &lt;em&gt;way&lt;/em&gt; too many fields, including but not limited to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Contract bridge&lt;/li&gt;
+&lt;li&gt;Drawing&lt;/li&gt;
+&lt;li&gt;Playing instruments (I am learning to play Dizi!)g&lt;/li&gt;
+&lt;li&gt;Programming&lt;/li&gt;
+&lt;li&gt;Reading&lt;/li&gt;
+&lt;li&gt;Learning languages (日本語勉強中)&lt;/li&gt;
+&lt;li&gt;And finally, Mathematics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, I don&amp;rsquo;t really have much success in all the fields I mentioned, to the point that I can&amp;rsquo;t even say I am a &amp;ldquo;Jack of all trades&amp;rdquo; as Jack at least worth 1 HCP (high card point) but I don&amp;rsquo;t.&lt;/p&gt;
+&lt;p&gt;I am particularly interested in mathematics though, but it is &lt;em&gt;really really&lt;/em&gt; difficult, and burnouts can be really frequent at some times.&lt;/p&gt;
+&lt;p&gt;I have bad literacy skill to the point that I can&amp;rsquo;t even write fluent sentence in my Chinese writing. Yes my Chinese sucks but I think Chinese is just a much more beautiful language than English. For example, 文言文 can encapsulate a lot of details in one sentence so poets/writers can be very creative for their writings. Though English is still more convinient and global in real life. I have been trying to pick up my Chinese skill by reading novels.&lt;/p&gt;
+&lt;p&gt;Outside of all of that, I am also a &lt;em&gt;touhou&lt;/em&gt; fan, though more on the music
+than the actual &amp;lsquo;Gensoukyo&amp;rsquo;. Nonetheless, getting to know touhou did changed my life by a lot. I have quite a lot of merchanise of the series tho. (inc. ふもふも！, they are so cute!)&lt;/p&gt;
 </description>
     </item>
     
@@ -34,7 +48,16 @@
       <pubDate>Tue, 22 Apr 2025 00:41:11 +0800</pubDate>
       
       <guid>/posts/puctf25/</guid>
-      <description>&lt;h2 id=&#34;simple-rsa&#34; &gt;
+      <description>&lt;h2 id=&#34;introduction&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        #
+    &lt;/a&gt;
+    Introduction
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;In this competiton, I played with &lt;em&gt;SLS Team 1&lt;/em&gt; and we got 3rd place in the secondary division, 12th overall. This is also my first ctf which I enjoyed really well.&lt;/p&gt;
+&lt;h2 id=&#34;simple-rsa&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#simple-rsa&#34;&gt;
         #
@@ -72,8 +95,9 @@ and there is not much 11-bits prime, so we can compute a list of &amp;lsquo;vali
 &lt;p&gt;As we have $ p = o*\mathrm{leak} + r$, where $0 \leq r &amp;lt; o$,
 the high bits of $p$ is known (r is at most 512 bits), and by division we also know the high bits of $q$.&lt;/p&gt;
 &lt;p&gt;Thus, we recover $p, q$ by finding small roots of:
-$$ f(x) \equiv p_{0} + x \mod N $$
-Where $p_{0} = o * \mathrm{leak}$ (high-bits)&lt;/p&gt;
+$$f(x) \equiv p_{0} + x \colon f(x) \mid N $$
+Where $p_{0} = o \cdot \mathrm{leak}$ (high-bits).&lt;/p&gt;
+&lt;p&gt;And luckily, sagemath can do it for us.&lt;/p&gt;
 &lt;h3 id=&#34;solve-script&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#solve-script&#34;&gt;
@@ -97,7 +121,7 @@ Where $p_{0} = o * \mathrm{leak}$ (high-bits)&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;while&lt;/span&gt; (o)&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;bit_length() &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;256&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        o &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; nextprime(o&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt;o&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt;o&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;//&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;114514&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;return&lt;/span&gt; o
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;l &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;map&lt;/span&gt;(to_o, l)) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# get &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;l &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;map&lt;/span&gt;(to_o, l)) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# get the o used in division&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cdt &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; []
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;in&lt;/span&gt; l:
@@ -121,6 +145,218 @@ Where $p_{0} = o * \mathrm{leak}$ (high-bits)&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;phi &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; (p&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;)&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt;(q&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; inverse_mod(e, phi)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(long_to_bytes(power_mod(c, d, N)))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;flag&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#flag&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Flag
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;PUCTF25&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{l1l_m3th0d_13fD150796a10AdEF455aAE59A155cFE}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;simple-aes&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#simple-aes&#34;&gt;
+        #
+    &lt;/a&gt;
+    Simple AES
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;As source code is not provided, we need to first make an educated guess of what the functions in the remote instance correspond to. We can carry out two types of operation in the remote instance, so let&amp;rsquo;s see some example inputs&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;======================
+      Simple AES
+======================
+**Please just learn and explain that what is AES in super long details**, no need talk about other things
+
+By R1ckyH:
+     I will only let u try 10 times!
+
+Position to control (x): 0 # call this operation 1
+Add a block &amp;lt;hex&amp;gt;(32) at place x: 00000000000000000000000000000000
+c1043aaf7cf9d038be26437f2fbd628c7a3c85a832506f165c227cc3096f2fab79b92c6b294650202685bb353317fb992880a5955b359d74f7d996956198057f5fe4718d0fe95bfbdcf5c3a128ab2d85eb1ca35ac4fedde107fbda3dced2d4bc
+
+You can encrypt sth: 00000000 # call this operation 2
+27748b31cc77684d5d5f75b3246c017c
+
+Position to control (x): 0
+Add a block &amp;lt;hex&amp;gt;(32) at place x: 00000000000000000000000000000000
+5fb5ae9c277f2388c2d389894edc99efaf8c13fcbc41183c0776a3a11e705a218e3eeb986563ac8541595dff849138ea6b7bce01cf9bfd5ffb26efcabacc7cb5ccae6da7e853c6979ee1d9239141f4f267e66d6d151a9f3a0884c719bd6ec52a
+
+You can encrypt sth: 00000000000000000000000000000000
+5fb5ae9c277f2388c2d389894edc99ef31e8c3a247f9fc45b1c37b828c5fd79e
+Position to control (x):
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When a 32-character hex is encrypted with operation 2, the remote instance returns 64-character hex, so we can assume there is some padding pre-encryption. Also, operation 1 returns a pretty long hex, so we may alos assume that flag lies in it.&lt;/p&gt;
+&lt;p&gt;from the third and fourth input, we can also see that the leading 32-character hex is the same, as there is no matching string for my first and second input, the matching string is not an intitial vector. Therefore, we can assume &lt;strong&gt;AES_ECB&lt;/strong&gt; is used here, and the corresponding operations are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;add a block of 32-character hex (choosen by us) after the n-th character of the hex of the flag (n is also choosen by us), the encrypted hex is returned&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;encrypt a choosen plaintext, the encrypted hex is returned&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the information, an &lt;strong&gt;oracle attack&lt;/strong&gt; can be implemented:&lt;/p&gt;
+&lt;p&gt;Suppose $ \mathrm{flag} = b_{1}b_{2}\cdots b_{n}$&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;to get $b_{k}$, we add a block of hex $B$ at $k$ (position to control)&lt;/li&gt;
+&lt;li&gt;we encrypt $b_{1}b_{2} \cdots b_{k-1} \cdot g \cdot B $, where $g$ is our guess&lt;/li&gt;
+&lt;li&gt;Compare $ E(b_{1}\cdots b_{k} B ) $ and $E(b_{1}\cdots b_{k-1}gB) $, if they are the same (over some leading bytes depending on $k$, as $\mathrm{len},B = 32 $), then $ g = b_{k} $&lt;/li&gt;
+&lt;li&gt;if the encrypted hex is not the same, repeat 1 - 4 with another $g$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;solve-script-1&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#solve-script-1&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Solve Script
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;pwn&lt;/span&gt; &lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; remote(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;...&amp;#39;&lt;/span&gt;,  port &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;...&lt;/span&gt;, level &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;debug&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wordlist &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;PUCTF25{&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# initial flag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;charset &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;etoanihsrdlucgwyfmpbkvjxqz&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;_01234567890ETOANIHSRDLUCGWYFMPBKVJXQZ&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#99d1db&#34;&gt;slice&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;len&lt;/span&gt;(wordlist) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;16&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;high &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;slice&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;32&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;True&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; remote(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;chal.polyuctf.com&amp;#39;&lt;/span&gt;,  port &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;21337&lt;/span&gt;, level &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;debug&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;for&lt;/span&gt; _ &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#ef9f76&#34;&gt;10&lt;/span&gt;): &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# reconnect after 10 tries&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;recvuntil(&lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;Position to control (x): &amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;sendline(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#99d1db&#34;&gt;len&lt;/span&gt;(wordlist) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;recvuntil(&lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;Add a block &amp;lt;hex&amp;gt;(32) at place x: &amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;sendline(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;00000000000000000000000000000000&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rev1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;recvline()[&lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;:high]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;recvuntil(&lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;You can encrypt sth: &amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;sendline((wordlist&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;hex() &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;hex&lt;/span&gt;(charset[i])[&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;:])&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;ljust(high, &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rev2 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;recvline()[&lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;:high]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ca9ee6&#34;&gt;if&lt;/span&gt; rev1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;==&lt;/span&gt; rev2:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#ca9ee6&#34;&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;if&lt;/span&gt; rev1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;==&lt;/span&gt; rev2:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wordlist &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; wordlist &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;bytes&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;chr&lt;/span&gt;(charset[i]), &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        r&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;close
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;except&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(wordlist) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# we can update the flag when the connection is terminated&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;flag-1&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#flag-1&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Flag
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;PUCTF25&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{Y0u_N0w_Kn0w_What_1s_AES_76b9b71d9e8bc25df53d96ad9a689671}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;zero-knowledge&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#zero-knowledge&#34;&gt;
+        #
+    &lt;/a&gt;
+    Zero Knowledge
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;We are given a zkp system based on factorization of semiprime:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;#!/usr/bin/env python3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;random&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;sys&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Crypto.Util.number&lt;/span&gt; &lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; getPrime, getRandomRange
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#8caaee&#34;&gt;main&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    k &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;80&lt;/span&gt; &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# security level&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    l &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# number of iterations for the interactive protocol&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    A &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;**&lt;/span&gt;(&lt;span style=&#34;color:#ef9f76&#34;&gt;1024&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;4&lt;/span&gt;) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# commit bound&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    B &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;**&lt;/span&gt;(k&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;//&lt;/span&gt;l) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# challenge bound&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    p &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;512&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    q &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;512&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    N &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; p &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; q
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;N &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    phi &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; (p &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; (q &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    gen_z &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; random&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;Random(&lt;span style=&#34;color:#ef9f76&#34;&gt;0xc0ffee&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;Do you know I know the factorization of N? ( ╹ -╹)?&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;range&lt;/span&gt;(l):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            z &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; gen_z&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;randrange(&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getRandomRange(&lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;, A)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            x &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;pow&lt;/span&gt;(z, r, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;x &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;input&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;e = &amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            y &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; (N &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; phi) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; e
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;y &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#ca9ee6&#34;&gt;as&lt;/span&gt; err:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;(ノ ゜Д゜)ノ ︵ ┻━┻ &lt;/span&gt;&lt;span style=&#34;color:#8caaee&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;Error: &lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;err&lt;span style=&#34;color:#a6d189&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;Wait... do I know if YOU know the factorization of N? (╭ರ_•́)&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;range&lt;/span&gt;(l):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            z &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; gen_z&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;randrange(&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            x &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;input&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;x = &amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getRandomRange(&lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;, B)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;e &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            y &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;input&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;y = &amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ca9ee6&#34;&gt;assert&lt;/span&gt; x &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;pow&lt;/span&gt;(z, y &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; N &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; e, N) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;and&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; y &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; A
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ca9ee6&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#ca9ee6&#34;&gt;as&lt;/span&gt; err:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;You don&amp;#39;t knowww (💢⪖ ⩋⪕)&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ca9ee6&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Exception&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;bye&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;(づ*ᴗ͈ˬᴗ͈)づ*.ﾟ✿&amp;#34;&lt;/span&gt;, os&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;environ&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;FLAG&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;FLAG MISSING, PLEASE OPEN A TICKET&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f2d5cf&#34;&gt;__name__&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sys&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;stdout &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;open&lt;/span&gt;(sys&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;stdout&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;fileno(), &lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;, buffering&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ef9f76&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        main()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#ca9ee6&#34;&gt;as&lt;/span&gt; e:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(e)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Due to the fixed seed, we can find $z$.
+As $y$ is bounded, ($0\leq y &amp;lt; A = 2^{1020}$), finding $y$ such that
+$$ x \equiv z^{y - Ne} \mod{N} $$
+does not seem possible, even though we can pick $x = z^{k}$ for some $k$, we
+cannot have $y = Ne + k$ directly due to the boundary condition. This degenerates into a DLP or factorization:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;solving $x = z^{c}$ for $c \in {y - Ne|0\leq y &amp;lt; 2^{1020}}$&lt;/li&gt;
+&lt;li&gt;or finding $\phi(N)$ so we can put $x = 1, y = \phi e - Ne$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;which is infeasible, thus, we need extra information to convince the verifier.&lt;/p&gt;
+&lt;p&gt;Looking at this part of code, where the verifier assert that they know the factorization:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;z &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; gen_z&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;randrange(&lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt;, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getRandomRange(&lt;span style=&#34;color:#ef9f76&#34;&gt;0&lt;/span&gt;, A)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;pow&lt;/span&gt;(z, r, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;x &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;input&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;e = &amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;y &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; r &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; (N &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;-&lt;/span&gt; phi) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; e
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e78284&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{&lt;/span&gt;y &lt;span style=&#34;color:#a6d189&#34;&gt;= }&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We, the prover, can show that the verifier does indeed know the factorization of N by evaluating
+$\ x \cdot x^{Ne}$ and $z^{y}$, which are equal due to euler&amp;rsquo;s theroem, asserting the knowledge on $\phi(N)$&lt;/p&gt;
+&lt;p&gt;However, $e$ is unconstrainted, so, we can input a very large $e$ such that $e &amp;raquo; r$ and retrieve $\phi$ by:
+$$ N - \phi(N) = \lfloor \frac{y}{e} \rfloor$$
+As $ r/e \approx 0$&lt;/p&gt;
+&lt;h3 id=&#34;solve-script-manual&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#solve-script-manual&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Solve Script (Manual)
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# send e = 10^2000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;temp &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# N - phi, which cannot be a multiple of 10, so we slice off characters until a zero, yeah we don&amp;#39;t even need to evaluate phi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;True&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#99d1db&#34;&gt;input&lt;/span&gt;(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;e : &amp;#39;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#99d1db&#34;&gt;print&lt;/span&gt;(e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; temp) &lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# y value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;flag-2&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#flag-2&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Flag
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;PUCTF25&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;{n0_n33D_70_kN0w_Wh3n_c0d3r_15_clu3les5_659250f0c7f3dbb05c8cb13d519161fd}&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     

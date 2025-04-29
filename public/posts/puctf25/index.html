@@ -23,6 +23,15 @@
     
         #
     
+    Introduction
+
+
+In this competiton, I played with SLS Team 1 and we got 3rd place in the secondary division, 12th overall. This is also my first ctf which I enjoyed really well.
+
+
+    
+        #
+    
     Simple RSA
 
 
@@ -458,9 +467,23 @@ So, we are given $ N, e, c $, and $\textrm{leak} = \lfloor\dfrac{p}{o}\rfloor$, 
     <summary>Table of Contents</summary>
     <div class="inner"><nav id="TableOfContents">
   <ul>
+    <li><a href="#introduction">Introduction</a></li>
     <li><a href="#simple-rsa">Simple RSA</a>
       <ul>
         <li><a href="#solve-script">Solve Script</a></li>
+        <li><a href="#flag">Flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#simple-aes">Simple AES</a>
+      <ul>
+        <li><a href="#solve-script-1">Solve Script</a></li>
+        <li><a href="#flag-1">Flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#zero-knowledge">Zero Knowledge</a>
+      <ul>
+        <li><a href="#solve-script-manual">Solve Script (Manual)</a></li>
+        <li><a href="#flag-2">Flag</a></li>
       </ul>
     </li>
   </ul>
@@ -489,7 +512,16 @@ So, we are given $ N, e, c $, and $\textrm{leak} = \lfloor\dfrac{p}{o}\rfloor$, 
 </script>
 
         <div class="content e-content">
-            <h2 id="simple-rsa" >
+            <h2 id="introduction" >
+<div>
+    <a href="#introduction">
+        #
+    </a>
+    Introduction
+</div>
+</h2>
+<p>In this competiton, I played with <em>SLS Team 1</em> and we got 3rd place in the secondary division, 12th overall. This is also my first ctf which I enjoyed really well.</p>
+<h2 id="simple-rsa" >
 <div>
     <a href="#simple-rsa">
         #
@@ -527,8 +559,9 @@ and there is not much 11-bits prime, so we can compute a list of &lsquo;valid pr
 <p>As we have $ p = o*\mathrm{leak} + r$, where $0 \leq r &lt; o$,
 the high bits of $p$ is known (r is at most 512 bits), and by division we also know the high bits of $q$.</p>
 <p>Thus, we recover $p, q$ by finding small roots of:
-$$ f(x) \equiv p_{0} + x \mod N $$
-Where $p_{0} = o * \mathrm{leak}$ (high-bits)</p>
+$$f(x) \equiv p_{0} + x \colon f(x) \mid N $$
+Where $p_{0} = o \cdot \mathrm{leak}$ (high-bits).</p>
+<p>And luckily, sagemath can do it for us.</p>
 <h3 id="solve-script" >
 <div>
     <a href="#solve-script">
@@ -552,7 +585,7 @@ Where $p_{0} = o * \mathrm{leak}$ (high-bits)</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> (o)<span style="color:#99d1db;font-weight:bold">.</span>bit_length() <span style="color:#99d1db;font-weight:bold">&lt;=</span> <span style="color:#ef9f76">256</span>:
 </span></span><span style="display:flex;"><span>        o <span style="color:#99d1db;font-weight:bold">=</span> nextprime(o<span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">-</span>o<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">+</span>o<span style="color:#99d1db;font-weight:bold">//</span><span style="color:#ef9f76">114514</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> o
-</span></span><span style="display:flex;"><span>l <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(<span style="color:#99d1db">map</span>(to_o, l)) <span style="color:#737994;font-style:italic"># get </span>
+</span></span><span style="display:flex;"><span>l <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(<span style="color:#99d1db">map</span>(to_o, l)) <span style="color:#737994;font-style:italic"># get the o used in division</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>cdt <span style="color:#99d1db;font-weight:bold">=</span> []
 </span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> l:
@@ -576,6 +609,218 @@ Where $p_{0} = o * \mathrm{leak}$ (high-bits)</p>
 </span></span><span style="display:flex;"><span>phi <span style="color:#99d1db;font-weight:bold">=</span> (p<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>)<span style="color:#99d1db;font-weight:bold">*</span>(q<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>)
 </span></span><span style="display:flex;"><span>d <span style="color:#99d1db;font-weight:bold">=</span> inverse_mod(e, phi)
 </span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(long_to_bytes(power_mod(c, d, N)))
+</span></span></code></pre></div><h3 id="flag" >
+<div>
+    <a href="#flag">
+        ##
+    </a>
+    Flag
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6d189">&#39;PUCTF25</span><span style="color:#a6d189">{l1l_m3th0d_13fD150796a10AdEF455aAE59A155cFE}</span><span style="color:#a6d189">&#39;</span>
+</span></span></code></pre></div><h2 id="simple-aes" >
+<div>
+    <a href="#simple-aes">
+        #
+    </a>
+    Simple AES
+</div>
+</h2>
+<p>As source code is not provided, we need to first make an educated guess of what the functions in the remote instance correspond to. We can carry out two types of operation in the remote instance, so let&rsquo;s see some example inputs</p>
+<pre tabindex="0"><code>======================
+      Simple AES
+======================
+**Please just learn and explain that what is AES in super long details**, no need talk about other things
+
+By R1ckyH:
+     I will only let u try 10 times!
+
+Position to control (x): 0 # call this operation 1
+Add a block &lt;hex&gt;(32) at place x: 00000000000000000000000000000000
+c1043aaf7cf9d038be26437f2fbd628c7a3c85a832506f165c227cc3096f2fab79b92c6b294650202685bb353317fb992880a5955b359d74f7d996956198057f5fe4718d0fe95bfbdcf5c3a128ab2d85eb1ca35ac4fedde107fbda3dced2d4bc
+
+You can encrypt sth: 00000000 # call this operation 2
+27748b31cc77684d5d5f75b3246c017c
+
+Position to control (x): 0
+Add a block &lt;hex&gt;(32) at place x: 00000000000000000000000000000000
+5fb5ae9c277f2388c2d389894edc99efaf8c13fcbc41183c0776a3a11e705a218e3eeb986563ac8541595dff849138ea6b7bce01cf9bfd5ffb26efcabacc7cb5ccae6da7e853c6979ee1d9239141f4f267e66d6d151a9f3a0884c719bd6ec52a
+
+You can encrypt sth: 00000000000000000000000000000000
+5fb5ae9c277f2388c2d389894edc99ef31e8c3a247f9fc45b1c37b828c5fd79e
+Position to control (x):
+</code></pre><p>When a 32-character hex is encrypted with operation 2, the remote instance returns 64-character hex, so we can assume there is some padding pre-encryption. Also, operation 1 returns a pretty long hex, so we may alos assume that flag lies in it.</p>
+<p>from the third and fourth input, we can also see that the leading 32-character hex is the same, as there is no matching string for my first and second input, the matching string is not an intitial vector. Therefore, we can assume <strong>AES_ECB</strong> is used here, and the corresponding operations are:</p>
+<ul>
+<li>
+<p>add a block of 32-character hex (choosen by us) after the n-th character of the hex of the flag (n is also choosen by us), the encrypted hex is returned</p>
+</li>
+<li>
+<p>encrypt a choosen plaintext, the encrypted hex is returned</p>
+</li>
+</ul>
+<p>With the information, an <strong>oracle attack</strong> can be implemented:</p>
+<p>Suppose $ \mathrm{flag} = b_{1}b_{2}\cdots b_{n}$</p>
+<ol>
+<li>to get $b_{k}$, we add a block of hex $B$ at $k$ (position to control)</li>
+<li>we encrypt $b_{1}b_{2} \cdots b_{k-1} \cdot g \cdot B $, where $g$ is our guess</li>
+<li>Compare $ E(b_{1}\cdots b_{k} B ) $ and $E(b_{1}\cdots b_{k-1}gB) $, if they are the same (over some leading bytes depending on $k$, as $\mathrm{len},B = 32 $), then $ g = b_{k} $</li>
+<li>if the encrypted hex is not the same, repeat 1 - 4 with another $g$</li>
+</ol>
+<h3 id="solve-script-1" >
+<div>
+    <a href="#solve-script-1">
+        ##
+    </a>
+    Solve Script
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">pwn</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span> 
+</span></span><span style="display:flex;"><span>r <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#39;...&#39;</span>,  port <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db;font-weight:bold">...</span>, level <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#a6d189">&#39;debug&#39;</span>)
+</span></span><span style="display:flex;"><span>wordlist <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#e78284">b</span><span style="color:#a6d189">&#39;PUCTF25{&#39;</span> <span style="color:#737994;font-style:italic"># initial flag</span>
+</span></span><span style="display:flex;"><span>charset <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;etoanihsrdlucgwyfmpbkvjxqz</span><span style="color:#a6d189">{}</span><span style="color:#a6d189">_01234567890ETOANIHSRDLUCGWYFMPBKVJXQZ&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">slice</span> <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">len</span>(wordlist) <span style="color:#99d1db;font-weight:bold">//</span> <span style="color:#ef9f76">16</span>
+</span></span><span style="display:flex;"><span>high <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">slice</span> <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">32</span> <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#ef9f76">32</span> 
+</span></span><span style="display:flex;"><span>i <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">try</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> <span style="color:#ef9f76">True</span>:
+</span></span><span style="display:flex;"><span>        r <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#39;chal.polyuctf.com&#39;</span>,  port <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">21337</span>, level <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#a6d189">&#39;debug&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">for</span> _ <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">10</span>): <span style="color:#737994;font-style:italic"># reconnect after 10 tries</span>
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Position to control (x): &#39;</span>)
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;</span><span style="color:#a6d189">{</span><span style="color:#99d1db">len</span>(wordlist) <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#ef9f76">1</span><span style="color:#a6d189">}</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Add a block &lt;hex&gt;(32) at place x: &#39;</span>)
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#a6d189">&#39;00000000000000000000000000000000&#39;</span>)
+</span></span><span style="display:flex;"><span>            rev1 <span style="color:#99d1db;font-weight:bold">=</span> r<span style="color:#99d1db;font-weight:bold">.</span>recvline()[<span style="color:#ef9f76">0</span>:high]
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;You can encrypt sth: &#39;</span>)
+</span></span><span style="display:flex;"><span>            r<span style="color:#99d1db;font-weight:bold">.</span>sendline((wordlist<span style="color:#99d1db;font-weight:bold">.</span>hex() <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#99d1db">hex</span>(charset[i])[<span style="color:#ef9f76">2</span>:])<span style="color:#99d1db;font-weight:bold">.</span>ljust(high, <span style="color:#a6d189">&#39;0&#39;</span>))
+</span></span><span style="display:flex;"><span>            rev2 <span style="color:#99d1db;font-weight:bold">=</span> r<span style="color:#99d1db;font-weight:bold">.</span>recvline()[<span style="color:#ef9f76">0</span>:high]
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">if</span> rev1 <span style="color:#99d1db;font-weight:bold">==</span> rev2:
+</span></span><span style="display:flex;"><span>                <span style="color:#ca9ee6">break</span>
+</span></span><span style="display:flex;"><span>            i <span style="color:#99d1db;font-weight:bold">=</span> i <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> rev1 <span style="color:#99d1db;font-weight:bold">==</span> rev2:
+</span></span><span style="display:flex;"><span>            wordlist <span style="color:#99d1db;font-weight:bold">=</span> wordlist <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#99d1db">bytes</span>(<span style="color:#99d1db">chr</span>(charset[i]), <span style="color:#a6d189">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>            i <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0</span>
+</span></span><span style="display:flex;"><span>        r<span style="color:#99d1db;font-weight:bold">.</span>close
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">except</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(wordlist) <span style="color:#737994;font-style:italic"># we can update the flag when the connection is terminated</span>
+</span></span></code></pre></div><h3 id="flag-1" >
+<div>
+    <a href="#flag-1">
+        ##
+    </a>
+    Flag
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6d189">&#39;PUCTF25</span><span style="color:#a6d189">{Y0u_N0w_Kn0w_What_1s_AES_76b9b71d9e8bc25df53d96ad9a689671}</span><span style="color:#a6d189">&#39;</span>
+</span></span></code></pre></div><h2 id="zero-knowledge" >
+<div>
+    <a href="#zero-knowledge">
+        #
+    </a>
+    Zero Knowledge
+</div>
+</h2>
+<p>We are given a zkp system based on factorization of semiprime:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#737994;font-style:italic">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">sys</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">Crypto.Util.number</span> <span style="color:#81c8be">import</span> getPrime, getRandomRange
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">main</span>():
+</span></span><span style="display:flex;"><span>    k <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">80</span> <span style="color:#737994;font-style:italic"># security level</span>
+</span></span><span style="display:flex;"><span>    l <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">5</span> <span style="color:#737994;font-style:italic"># number of iterations for the interactive protocol</span>
+</span></span><span style="display:flex;"><span>    A <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span>(<span style="color:#ef9f76">1024</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">4</span>) <span style="color:#737994;font-style:italic"># commit bound</span>
+</span></span><span style="display:flex;"><span>    B <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span>(k<span style="color:#99d1db;font-weight:bold">//</span>l) <span style="color:#737994;font-style:italic"># challenge bound</span>
+</span></span><span style="display:flex;"><span>    p <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">512</span>)
+</span></span><span style="display:flex;"><span>    q <span style="color:#99d1db;font-weight:bold">=</span> getPrime(<span style="color:#ef9f76">512</span>)
+</span></span><span style="display:flex;"><span>    N <span style="color:#99d1db;font-weight:bold">=</span> p <span style="color:#99d1db;font-weight:bold">*</span> q
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>N <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    phi <span style="color:#99d1db;font-weight:bold">=</span> (p <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>) <span style="color:#99d1db;font-weight:bold">*</span> (q <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>    gen_z <span style="color:#99d1db;font-weight:bold">=</span> random<span style="color:#99d1db;font-weight:bold">.</span>Random(<span style="color:#ef9f76">0xc0ffee</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Do you know I know the factorization of N? ( ╹ -╹)?&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(l):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">try</span>:
+</span></span><span style="display:flex;"><span>            z <span style="color:#99d1db;font-weight:bold">=</span> gen_z<span style="color:#99d1db;font-weight:bold">.</span>randrange(<span style="color:#ef9f76">2</span>, N)
+</span></span><span style="display:flex;"><span>            r <span style="color:#99d1db;font-weight:bold">=</span> getRandomRange(<span style="color:#ef9f76">0</span>, A)
+</span></span><span style="display:flex;"><span>            x <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">pow</span>(z, r, N)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>x <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            e <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;e = &#34;</span>))
+</span></span><span style="display:flex;"><span>            y <span style="color:#99d1db;font-weight:bold">=</span> r <span style="color:#99d1db;font-weight:bold">+</span> (N <span style="color:#99d1db;font-weight:bold">-</span> phi) <span style="color:#99d1db;font-weight:bold">*</span> e
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>y <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">except</span> <span style="color:#ef9f76">Exception</span> <span style="color:#ca9ee6">as</span> err:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;(ノ ゜Д゜)ノ ︵ ┻━┻ </span><span style="color:#8caaee">\n</span><span style="color:#a6d189">Error: </span><span style="color:#a6d189">{</span>err<span style="color:#a6d189">}</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Wait... do I know if YOU know the factorization of N? (╭ರ_•́)&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(l):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">try</span>:
+</span></span><span style="display:flex;"><span>            z <span style="color:#99d1db;font-weight:bold">=</span> gen_z<span style="color:#99d1db;font-weight:bold">.</span>randrange(<span style="color:#ef9f76">2</span>, N)
+</span></span><span style="display:flex;"><span>            x <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;x = &#34;</span>))
+</span></span><span style="display:flex;"><span>            e <span style="color:#99d1db;font-weight:bold">=</span> getRandomRange(<span style="color:#ef9f76">0</span>, B)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>e <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            y <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;y = &#34;</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">assert</span> x <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">pow</span>(z, y <span style="color:#99d1db;font-weight:bold">-</span> N <span style="color:#99d1db;font-weight:bold">*</span> e, N) <span style="color:#99d1db;font-weight:bold">and</span> <span style="color:#ef9f76">0</span> <span style="color:#99d1db;font-weight:bold">&lt;=</span> y <span style="color:#99d1db;font-weight:bold">&lt;</span> A
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">except</span> <span style="color:#ef9f76">Exception</span> <span style="color:#ca9ee6">as</span> err:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;You don&#39;t knowww (💢⪖ ⩋⪕)&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">Exception</span>(<span style="color:#a6d189">&#34;bye&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;(づ*ᴗ͈ˬᴗ͈)づ*.ﾟ✿&#34;</span>, os<span style="color:#99d1db;font-weight:bold">.</span>environ<span style="color:#99d1db;font-weight:bold">.</span>get(<span style="color:#a6d189">&#34;FLAG&#34;</span>, <span style="color:#a6d189">&#34;FLAG MISSING, PLEASE OPEN A TICKET&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> <span style="color:#f2d5cf">__name__</span> <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#a6d189">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    sys<span style="color:#99d1db;font-weight:bold">.</span>stdout <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">open</span>(sys<span style="color:#99d1db;font-weight:bold">.</span>stdout<span style="color:#99d1db;font-weight:bold">.</span>fileno(), <span style="color:#a6d189">&#39;w&#39;</span>, buffering<span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">try</span>:
+</span></span><span style="display:flex;"><span>        main()
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">except</span> <span style="color:#ef9f76">Exception</span> <span style="color:#ca9ee6">as</span> e:
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(e)
+</span></span></code></pre></div><p>Due to the fixed seed, we can find $z$.
+As $y$ is bounded, ($0\leq y &lt; A = 2^{1020}$), finding $y$ such that
+$$ x \equiv z^{y - Ne} \mod{N} $$
+does not seem possible, even though we can pick $x = z^{k}$ for some $k$, we
+cannot have $y = Ne + k$ directly due to the boundary condition. This degenerates into a DLP or factorization:</p>
+<ul>
+<li>solving $x = z^{c}$ for $c \in {y - Ne|0\leq y &lt; 2^{1020}}$</li>
+<li>or finding $\phi(N)$ so we can put $x = 1, y = \phi e - Ne$</li>
+</ul>
+<p>which is infeasible, thus, we need extra information to convince the verifier.</p>
+<p>Looking at this part of code, where the verifier assert that they know the factorization:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>z <span style="color:#99d1db;font-weight:bold">=</span> gen_z<span style="color:#99d1db;font-weight:bold">.</span>randrange(<span style="color:#ef9f76">2</span>, N)
+</span></span><span style="display:flex;"><span>r <span style="color:#99d1db;font-weight:bold">=</span> getRandomRange(<span style="color:#ef9f76">0</span>, A)
+</span></span><span style="display:flex;"><span>x <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">pow</span>(z, r, N)
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>x <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;e = &#34;</span>))
+</span></span><span style="display:flex;"><span>y <span style="color:#99d1db;font-weight:bold">=</span> r <span style="color:#99d1db;font-weight:bold">+</span> (N <span style="color:#99d1db;font-weight:bold">-</span> phi) <span style="color:#99d1db;font-weight:bold">*</span> e
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;</span><span style="color:#a6d189">{</span>y <span style="color:#a6d189">= }</span><span style="color:#a6d189">&#34;</span>)
+</span></span></code></pre></div><p>We, the prover, can show that the verifier does indeed know the factorization of N by evaluating
+$\ x \cdot x^{Ne}$ and $z^{y}$, which are equal due to euler&rsquo;s theroem, asserting the knowledge on $\phi(N)$</p>
+<p>However, $e$ is unconstrainted, so, we can input a very large $e$ such that $e &raquo; r$ and retrieve $\phi$ by:
+$$ N - \phi(N) = \lfloor \frac{y}{e} \rfloor$$
+As $ r/e \approx 0$</p>
+<h3 id="solve-script-manual" >
+<div>
+    <a href="#solve-script-manual">
+        ##
+    </a>
+    Solve Script (Manual)
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># send e = 10^2000</span>
+</span></span><span style="display:flex;"><span>temp <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#737994;font-style:italic"># N - phi, which cannot be a multiple of 10, so we slice off characters until a zero, yeah we don&#39;t even need to evaluate phi</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">while</span> <span style="color:#ef9f76">True</span>:
+</span></span><span style="display:flex;"><span>    e <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#39;e : &#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(e <span style="color:#99d1db;font-weight:bold">*</span> temp) <span style="color:#737994;font-style:italic"># y value</span>
+</span></span></code></pre></div><h3 id="flag-2" >
+<div>
+    <a href="#flag-2">
+        ##
+    </a>
+    Flag
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6d189">&#39;PUCTF25</span><span style="color:#a6d189">{n0_n33D_70_kN0w_Wh3n_c0d3r_15_clu3les5_659250f0c7f3dbb05c8cb13d519161fd}</span><span style="color:#a6d189">&#39;</span>
 </span></span></code></pre></div>
         </div>
 

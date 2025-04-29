@@ -112,11 +112,11 @@ As source code is not provided, we need to first make an educated guess of what 
 By R1ckyH:
      I will only let u try 10 times!
 
-Position to control (x): 0 # operation 1
+Position to control (x): 0 # call this operation 1
 Add a block <hex>(32) at place x: 00000000000000000000000000000000
 c1043aaf7cf9d038be26437f2fbd628c7a3c85a832506f165c227cc3096f2fab79b92c6b294650202685bb353317fb992880a5955b359d74f7d996956198057f5fe4718d0fe95bfbdcf5c3a128ab2d85eb1ca35ac4fedde107fbda3dced2d4bc
 
-You can encrypt sth: 00000000 # operation 2
+You can encrypt sth: 00000000 # call this operation 2
 27748b31cc77684d5d5f75b3246c017c
 
 Position to control (x): 0
@@ -127,9 +127,9 @@ You can encrypt sth: 00000000000000000000000000000000
 5fb5ae9c277f2388c2d389894edc99ef31e8c3a247f9fc45b1c37b828c5fd79e
 Position to control (x):
 ```
-When I encrypt a 32-character hex with operation 2, the remote instance returns 64-character hex, so we can assume there is some padding pre-encryption. Also, operation 1 returns a pretty long hex, so we may alos assume that flag lies in it.
+When a 32-character hex is encrypted with operation 2, the remote instance returns 64-character hex, so we can assume there is some padding pre-encryption. Also, operation 1 returns a pretty long hex, so we may alos assume that flag lies in it.
 
-from my third and fourth input, we can also see that the leading 32-character hex is the same, as there is no matching string for my first and second input, the matching string is not an intitial vector. Therefore, we can assume **AES_ECB** is used here, and the corresponding operations are:
+from the third and fourth input, we can also see that the leading 32-character hex is the same, as there is no matching string for my first and second input, the matching string is not an intitial vector. Therefore, we can assume **AES_ECB** is used here, and the corresponding operations are:
 
 
 - add a block of 32-character hex (choosen by us) after the n-th character of the hex of the flag (n is also choosen by us), the encrypted hex is returned
