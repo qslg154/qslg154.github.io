@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html lang="en-us" data-theme="">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="theme-name" content="Anubis2">
+
+<title>cuhk ctf 2025 - qslg154</title>
+
+<meta name="description" content="Played the ctf with the team Grey Bricks, and we solved all crypto, most are pretty standard tho unfortunately.
+
+
+    
+        #
+    
+    Schrödinger&rsquo;s Encryption
+
+
+import secrets
+
+def andcryption(message: bytes, key: bytes) -&gt; bytes:
+    assert len(message) == len(key)
+    n = len(message)
+    m, k = int.from_bytes(message, &#34;big&#34;), int.from_bytes(key, &#34;big&#34;)
+    return int.to_bytes(m &amp; k, n, &#34;big&#34;)
+
+
+def orcryption(message: bytes, key: bytes) -&gt; bytes:
+    assert len(message) == len(key)
+    n = len(message)
+    m, k = int.from_bytes(message, &#34;big&#34;), int.from_bytes(key, &#34;big&#34;)
+    return int.to_bytes(m | k, n, &#34;big&#34;)
+
+
+def schrodingers_cat(message: str) -&gt; str:
+    key = secrets.token_bytes(len(message))
+    encrypted = secrets.choice([andcryption, orcryption])(message.encode(), key)
+    return f&#34;0x{bytes.hex(encrypted)}&#34;
+    
+# we can call schrodingers_cat on flag indefinitely
+An oracle $f$ is given:
+$$ f(m, k) =
+\begin{cases}
+m  ⅋  k &amp; \text{for 50%} \\
+m  |  k &amp; \text{for 50%}
+\end{cases}
+$$
+Where $ |, ⅋ $ denote the bitwise or/and, and $m$ is the flag and $k$ is a random stream.">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="//localhost:1313/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="//localhost:1313/favicon.png">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.4c42aa0abeac804c4933c54677c449cea1f723caae778425d031e98565a0cdef.css" integrity="sha256-TEKqCr6sgExJM8VGd8RJzqH3I8qud4Ql0DHphWWgze8=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.9c1888ebff42c0224ce04dac10cb2c401f1b77f54f78e8d87d73c3bed781c263.css" integrity="sha256-nBiI6/9CwCJM4E2sEMssQB8bd/VPeOjYfXPDvteBwmM=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.acd606c0fce58853afe0248d37bb41acbbcdd8b1aca2412b6c0fa760da0137f3.css" integrity="sha256-rNYGwPzliFOv4CSNN7tBrLvN2LGsokErbA&#43;nYNoBN/M=">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <script src="/js/script.672e2309c296e07c18bcd08b28d797a56222ff941d65f308fba3158c44885b14.js" type="text/javascript" charset="utf-8" integrity="sha256-Zy4jCcKW4HwYvNCLKNeXpWIi/5QdZfMI&#43;6MVjESIWxQ="></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header">
+            
+                <div class="header-top">
+    <div class="header-top-left">
+        <h1 class="site-title noselect">
+    <a href="//localhost:1313/">qslg154</a>
+</h1>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+    
+        <div class="theme-switcher">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-sun-high"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg>
+
+
+</span>
+
+        </div>
+    
+
+    <script>
+        const STORAGE_KEY = 'user-color-scheme'
+        const defaultTheme = "light"
+
+        let currentTheme
+        let switchButton
+        let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+        function switchTheme(e) {
+            currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            if (localStorage) localStorage.setItem(STORAGE_KEY, currentTheme);
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        const autoChangeScheme = e => {
+            currentTheme = e.matches ? 'dark' : 'light'
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            switchButton = document.querySelector('.theme-switcher')
+            currentTheme = detectCurrentScheme()
+
+            if (currentTheme === 'auto') {
+                autoChangeScheme(autoDefinedScheme);
+                autoDefinedScheme.addListener(autoChangeScheme);
+            } else {
+                document.documentElement.setAttribute('data-theme', currentTheme)
+            }
+
+            if (switchButton) {
+                switchButton.addEventListener('click', switchTheme, false)
+            }
+
+            showContent();
+        })
+
+        function detectCurrentScheme() {
+            if (localStorage !== null && localStorage.getItem(STORAGE_KEY)) {
+                return localStorage.getItem(STORAGE_KEY)
+            }
+            if (defaultTheme) {
+                return defaultTheme
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function showContent() {
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = 1;
+        }
+
+        function changeGiscusTheme (theme) {
+            function sendMessage(message) {
+              const iframe = document.querySelector('iframe.giscus-frame');
+              if (!iframe) return;
+              iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+            }
+
+            sendMessage({
+              setConfig: {
+                theme: theme
+              }
+            });
+        }
+    </script>
+
+
+        <ul class="social-icons noselect">
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+    <li>
+            <a href="/index.xml" title="RSS" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M4 4a16 16 0 0 1 16 16" /><path d="M4 11a9 9 0 0 1 9 9" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+
+    </div>
+    <div class="header-top-right">
+
+    </div>
+</div>
+
+
+    <nav class="noselect">
+        
+        
+        <a class="" href="//localhost:1313/" title="">Home</a>
+        
+        <a class="" href="//localhost:1313/about/" title="">About</a>
+        
+        <a class="" href="//localhost:1313/tags/" title="">Tags</a>
+        
+        <a class="" href="//localhost:1313/posts/" title="">Archive</a>
+        
+    </nav>
+
+
+
+
+
+
+
+
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1">
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                
+                
+                
+                <h1 class="p-name post-title ">cuhk ctf 2025</h1>
+                
+
+            </header>
+            
+
+
+
+<div class="post-info noselect">
+    
+        <div class="post-date dt-published">
+            <time datetime="2025-10-01">2025-10-01</time>
+            
+        </div>
+    
+
+    <a class="post-hidden-url u-url" href="/posts/cuhk25/">/posts/cuhk25/</a>
+    <a href="//localhost:1313/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
+
+
+    <div class="post-taxonomies">
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+        
+
+  
+  
+
+
+
+
+  
+  
+  
+  <details class="toc noselect">
+    <summary>Table of Contents</summary>
+    <div class="inner"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#schrödingers-encryption">Schrödinger&rsquo;s Encryption</a>
+      <ul>
+        <li><a href="#script">Script</a></li>
+      </ul>
+    </li>
+    <li><a href="#trustworthy-person">Trustworthy Person</a>
+      <ul>
+        <li><a href="#script-1">Script</a></li>
+      </ul>
+    </li>
+    <li><a href="#trustworthy-person-revenge">Trustworthy Person Revenge</a>
+      <ul>
+        <li><a href="#find-curves">Find curves</a></li>
+        <li><a href="#list-of-orders-and-curve-they-correspond-to">List of orders and curve they correspond to</a></li>
+        <li><a href="#constructing-generators">Constructing generators</a></li>
+        <li><a href="#solve">Solve</a></li>
+        <li><a href="#afterwords">Afterwords</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  </details>
+  
+
+
+
+<script>
+  var toc = document.querySelector(".toc");
+  if (toc) {
+    toc.addEventListener("click", function () {
+      if (event.target.tagName !== "A") {
+        event.preventDefault();
+        if (this.open) {
+          this.open = false;
+          this.classList.remove("expanded");
+        } else {
+          this.open = true;
+          this.classList.add("expanded");
+        }
+      }
+    });
+  }
+</script>
+
+        <div class="content e-content">
+            <p>Played the ctf with the team <em>Grey Bricks</em>, and we solved all crypto, most are pretty standard tho unfortunately.</p>
+<h2 id="schrödingers-encryption" >
+<div>
+    <a href="#schr%c3%b6dingers-encryption">
+        #
+    </a>
+    Schrödinger&rsquo;s Encryption
+</div>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">secrets</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">andcryption</span>(message: <span style="color:#99d1db">bytes</span>, key: <span style="color:#99d1db">bytes</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">bytes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> <span style="color:#99d1db">len</span>(message) <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">len</span>(key)
+</span></span><span style="display:flex;"><span>    n <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">len</span>(message)
+</span></span><span style="display:flex;"><span>    m, k <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(message, <span style="color:#a6d189">&#34;big&#34;</span>), <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(key, <span style="color:#a6d189">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>to_bytes(m <span style="color:#99d1db;font-weight:bold">&amp;</span> k, n, <span style="color:#a6d189">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">orcryption</span>(message: <span style="color:#99d1db">bytes</span>, key: <span style="color:#99d1db">bytes</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">bytes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> <span style="color:#99d1db">len</span>(message) <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">len</span>(key)
+</span></span><span style="display:flex;"><span>    n <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">len</span>(message)
+</span></span><span style="display:flex;"><span>    m, k <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(message, <span style="color:#a6d189">&#34;big&#34;</span>), <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(key, <span style="color:#a6d189">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>to_bytes(m <span style="color:#99d1db;font-weight:bold">|</span> k, n, <span style="color:#a6d189">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">schrodingers_cat</span>(message: <span style="color:#99d1db">str</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">str</span>:
+</span></span><span style="display:flex;"><span>    key <span style="color:#99d1db;font-weight:bold">=</span> secrets<span style="color:#99d1db;font-weight:bold">.</span>token_bytes(<span style="color:#99d1db">len</span>(message))
+</span></span><span style="display:flex;"><span>    encrypted <span style="color:#99d1db;font-weight:bold">=</span> secrets<span style="color:#99d1db;font-weight:bold">.</span>choice([andcryption, orcryption])(message<span style="color:#99d1db;font-weight:bold">.</span>encode(), key)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#e78284">f</span><span style="color:#a6d189">&#34;0x</span><span style="color:#a6d189">{</span><span style="color:#99d1db">bytes</span><span style="color:#99d1db;font-weight:bold">.</span>hex(encrypted)<span style="color:#a6d189">}</span><span style="color:#a6d189">&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># we can call schrodingers_cat on flag indefinitely</span>
+</span></span></code></pre></div><p>An oracle $f$ is given:
+$$ f(m, k) =
+\begin{cases}
+m  ⅋  k &amp; \text{for 50%} \\
+m  |  k &amp; \text{for 50%}
+\end{cases}
+$$
+Where $ |, ⅋ $ denote the bitwise or/and, and $m$ is the flag and $k$ is a random stream.</p>
+<p>Notice that when the $i$-th bit of m is $0$ , then $\mathbb(m) = 0.25$ as $f(m, k) = 1$ iff we use &lsquo;or&rsquo; and the $i$-th bit of k is $1$. similarly, $\mathbb{E}(m)$ = $0.75$ when $m=1$, so we can just carry out a statistical attack on a lot of samples.</p>
+<h3 id="script" >
+<div>
+    <a href="#script">
+        ##
+    </a>
+    Script
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">pwn</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">Crypto.Util.number</span> <span style="color:#81c8be">import</span> long_to_bytes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#39;...&#39;</span>)
+</span></span><span style="display:flex;"><span>const <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">768</span>  <span style="color:#737994;font-style:italic"># num of bits</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">hex_to_binary_dict</span>(hex_string):
+</span></span><span style="display:flex;"><span>    hex_to_bin_map <span style="color:#99d1db;font-weight:bold">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;0&#39;</span>: <span style="color:#a6d189">&#39;0000&#39;</span>, <span style="color:#a6d189">&#39;1&#39;</span>: <span style="color:#a6d189">&#39;0001&#39;</span>, <span style="color:#a6d189">&#39;2&#39;</span>: <span style="color:#a6d189">&#39;0010&#39;</span>, <span style="color:#a6d189">&#39;3&#39;</span>: <span style="color:#a6d189">&#39;0011&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;4&#39;</span>: <span style="color:#a6d189">&#39;0100&#39;</span>, <span style="color:#a6d189">&#39;5&#39;</span>: <span style="color:#a6d189">&#39;0101&#39;</span>, <span style="color:#a6d189">&#39;6&#39;</span>: <span style="color:#a6d189">&#39;0110&#39;</span>, <span style="color:#a6d189">&#39;7&#39;</span>: <span style="color:#a6d189">&#39;0111&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;8&#39;</span>: <span style="color:#a6d189">&#39;1000&#39;</span>, <span style="color:#a6d189">&#39;9&#39;</span>: <span style="color:#a6d189">&#39;1001&#39;</span>, <span style="color:#a6d189">&#39;A&#39;</span>: <span style="color:#a6d189">&#39;1010&#39;</span>, <span style="color:#a6d189">&#39;B&#39;</span>: <span style="color:#a6d189">&#39;1011&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;C&#39;</span>: <span style="color:#a6d189">&#39;1100&#39;</span>, <span style="color:#a6d189">&#39;D&#39;</span>: <span style="color:#a6d189">&#39;1101&#39;</span>, <span style="color:#a6d189">&#39;E&#39;</span>: <span style="color:#a6d189">&#39;1110&#39;</span>, <span style="color:#a6d189">&#39;F&#39;</span>: <span style="color:#a6d189">&#39;1111&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;a&#39;</span>: <span style="color:#a6d189">&#39;1010&#39;</span>, <span style="color:#a6d189">&#39;b&#39;</span>: <span style="color:#a6d189">&#39;1011&#39;</span>, <span style="color:#a6d189">&#39;c&#39;</span>: <span style="color:#a6d189">&#39;1100&#39;</span>, <span style="color:#a6d189">&#39;d&#39;</span>: <span style="color:#a6d189">&#39;1101&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6d189">&#39;e&#39;</span>: <span style="color:#a6d189">&#39;1110&#39;</span>, <span style="color:#a6d189">&#39;f&#39;</span>: <span style="color:#a6d189">&#39;1111&#39;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hex_digits <span style="color:#99d1db;font-weight:bold">=</span> hex_string[<span style="color:#ef9f76">2</span>:] <span style="color:#ca9ee6">if</span> hex_string<span style="color:#99d1db;font-weight:bold">.</span>startswith(<span style="color:#a6d189">&#39;0x&#39;</span>) <span style="color:#ca9ee6">else</span> hex_string
+</span></span><span style="display:flex;"><span>    binary_digits <span style="color:#99d1db;font-weight:bold">=</span> [hex_to_bin_map[digit] <span style="color:#ca9ee6">for</span> digit <span style="color:#99d1db;font-weight:bold">in</span> hex_digits]
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#a6d189">&#39;0b&#39;</span> <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#a6d189">&#39;&#39;</span><span style="color:#99d1db;font-weight:bold">.</span>join(binary_digits)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">hamming_weight</span>(s):  <span style="color:#737994;font-style:italic"># return numb. of 1</span>
+</span></span><span style="display:flex;"><span>    a <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(s, <span style="color:#ef9f76">16</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> a<span style="color:#99d1db;font-weight:bold">.</span>bit_count()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gather <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">False</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> gather:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">with</span> <span style="color:#99d1db">open</span>(<span style="color:#a6d189">&#39;ct.txt&#39;</span>, <span style="color:#a6d189">&#39;a&#39;</span>) <span style="color:#ca9ee6">as</span> f:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">1000</span>):
+</span></span><span style="display:flex;"><span>            chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(
+</span></span><span style="display:flex;"><span>                <span style="color:#e78284">b</span><span style="color:#a6d189">&#34;Now tell me the flag, I will check if you are right.&#34;</span>)
+</span></span><span style="display:flex;"><span>            chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;Alice: &#34;</span>)
+</span></span><span style="display:flex;"><span>            chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;0&#39;</span>)
+</span></span><span style="display:flex;"><span>            chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;I will send my flag once again, here you go... &#39;</span>)
+</span></span><span style="display:flex;"><span>            d <span style="color:#99d1db;font-weight:bold">=</span> chal<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>decode()<span style="color:#99d1db;font-weight:bold">.</span>strip()
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(hamming_weight(d))
+</span></span><span style="display:flex;"><span>            f<span style="color:#99d1db;font-weight:bold">.</span>write(d <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#a6d189">&#39;</span><span style="color:#8caaee">\n</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>brute <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">True</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> brute:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">with</span> <span style="color:#99d1db">open</span>(<span style="color:#a6d189">&#39;ct.txt&#39;</span>, <span style="color:#a6d189">&#39;r&#39;</span>) <span style="color:#ca9ee6">as</span> f:
+</span></span><span style="display:flex;"><span>        l <span style="color:#99d1db;font-weight:bold">=</span> f<span style="color:#99d1db;font-weight:bold">.</span>readlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    l <span style="color:#99d1db;font-weight:bold">=</span> [hex_to_binary_dict(i<span style="color:#99d1db;font-weight:bold">.</span>strip())<span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> l]
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(l)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ind <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">2</span>
+</span></span><span style="display:flex;"><span>    rec <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#a6d189">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    broken_index <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">iter</span> <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> ind <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">2</span>, <span style="color:#99d1db">len</span>(l[<span style="color:#ef9f76">0</span>])):
+</span></span><span style="display:flex;"><span>        s <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> l[:<span style="color:#99d1db">iter</span>]:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(ind, i[ind])
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">if</span> i[ind] <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#a6d189">&#39;1&#39;</span>:
+</span></span><span style="display:flex;"><span>                s <span style="color:#99d1db;font-weight:bold">+=</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(s)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> s <span style="color:#99d1db;font-weight:bold">&lt;</span> <span style="color:#99d1db">iter</span> <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">0.5</span>:
+</span></span><span style="display:flex;"><span>            rec <span style="color:#99d1db;font-weight:bold">+=</span> <span style="color:#a6d189">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">elif</span> s <span style="color:#99d1db;font-weight:bold">&gt;</span> <span style="color:#99d1db">iter</span> <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">0.5</span>:
+</span></span><span style="display:flex;"><span>            rec <span style="color:#99d1db;font-weight:bold">+=</span> <span style="color:#a6d189">&#39;1&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">else</span>:
+</span></span><span style="display:flex;"><span>            broken_index<span style="color:#99d1db;font-weight:bold">.</span>append(ind)
+</span></span><span style="display:flex;"><span>            rec <span style="color:#99d1db;font-weight:bold">+=</span> <span style="color:#a6d189">&#39;x&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(rec)
+</span></span><span style="display:flex;"><span>l <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#99d1db">len</span>(rec))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">0</span>, <span style="color:#99d1db">len</span>(rec)<span style="color:#99d1db;font-weight:bold">//</span><span style="color:#ef9f76">8</span>, <span style="color:#ef9f76">1</span>):
+</span></span><span style="display:flex;"><span>    block <span style="color:#99d1db;font-weight:bold">=</span> rec[i<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">8</span>: (i<span style="color:#99d1db;font-weight:bold">+</span><span style="color:#ef9f76">1</span>)<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">8</span>]
+</span></span><span style="display:flex;"><span>    block <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#a6d189">&#39;0b&#39;</span> <span style="color:#99d1db;font-weight:bold">+</span> block
+</span></span><span style="display:flex;"><span>    bt <span style="color:#99d1db;font-weight:bold">=</span> long_to_bytes(<span style="color:#99d1db">int</span>(block, <span style="color:#ef9f76">2</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(bt)
+</span></span><span style="display:flex;"><span>    l<span style="color:#99d1db;font-weight:bold">.</span>append(bt<span style="color:#99d1db;font-weight:bold">.</span>decode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#39;&#39;</span><span style="color:#99d1db;font-weight:bold">.</span>join(l))
+</span></span></code></pre></div><h2 id="trustworthy-person" >
+<div>
+    <a href="#trustworthy-person">
+        #
+    </a>
+    Trustworthy Person
+</div>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">SquigglyStuff</span> <span style="color:#81c8be">import</span> Point, Squiggle, deserialize_point
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">Crypto.Random.random</span> <span style="color:#81c8be">import</span> randint
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">sage.all</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># Do you like Bitcoins?</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># Introducing the Bitcoin Squiggle! (｡♥‿♥｡)</span>
+</span></span><span style="display:flex;"><span>squiggle <span style="color:#99d1db;font-weight:bold">=</span> Squiggle(<span style="color:#ef9f76">0</span>, <span style="color:#ef9f76">7</span>, <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">256</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">32</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">9</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">8</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">7</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">6</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">4</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>) <span style="color:#737994;font-style:italic"># Y^2 = X^3 + 7</span>
+</span></span><span style="display:flex;"><span>G <span style="color:#99d1db;font-weight:bold">=</span> Point(
+</span></span><span style="display:flex;"><span>    <span style="color:#ef9f76">0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ef9f76">0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>order <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141</span>
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(is_prime(order))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">trust</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;&gt; &#34;</span>)<span style="color:#99d1db;font-weight:bold">.</span>strip()<span style="color:#99d1db;font-weight:bold">.</span>lower()[<span style="color:#ef9f76">0</span>] <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#a6d189">&#39;y&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">main</span>():
+</span></span><span style="display:flex;"><span>    start_time <span style="color:#99d1db;font-weight:bold">=</span> time<span style="color:#99d1db;font-weight:bold">.</span>time()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    d <span style="color:#99d1db;font-weight:bold">=</span> randint(<span style="color:#ef9f76">2</span>, order <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>    Q <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(d, G)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Ciallo～(∠・ω&lt; )⌒★&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I know a secret number d, and I can tell you Q.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Q:&#34;</span>, Q)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I really know the value of d! (≧▽≦)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Do you trust me? 0v0&#34;</span>)
+</span></span><span style="display:flex;"><span>    continue_protocol <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db;font-weight:bold">not</span> trust()
+</span></span><span style="display:flex;"><span>    round_no <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> continue_protocol:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> round_no <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">10</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;You don&#39;t trust me? (╯°□°）╯︵ ┻━┻&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I am a trustworthy person, I swear! (｡•́︿•̀｡)&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Me go cry in the corner now... (ಥ﹏ಥ)&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Bye! (╯︵╰,)&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>        round_no <span style="color:#99d1db;font-weight:bold">+=</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Why no trust me? QAQ&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;OK fine, I will prove it to you.&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;The protocol goes as follows:&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#e78284">r</span><span style="color:#a6d189">&#34;1. Nah I am too lazy to write it down, just read the code by yourself... ¯\_(ツ)_/¯&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;2. Yes, CTF players should know how to read code. AwA&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#737994;font-style:italic"># UwU</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Now give me C1 and C2! &gt;w&lt;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I don&#39;t want C4, I don&#39;t wanna get exploded! :3&#34;</span>)
+</span></span><span style="display:flex;"><span>        C1 <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;C1: &#34;</span>)<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>        C2 <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;C2: &#34;</span>)<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;The thing you need is&#34;</span>, squiggle<span style="color:#99d1db;font-weight:bold">.</span>add(C2, squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(<span style="color:#99d1db;font-weight:bold">-</span>d, C1)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Now do you trust me? OwO&#34;</span>)
+</span></span><span style="display:flex;"><span>        continue_protocol <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db;font-weight:bold">not</span> trust()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I knew you would trust me, I am a trustworthy person after all! ^_^&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Now, it&#39;s time for you to prove that to me! (¬‿¬)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I can also prove that you don&#39;t know the secret number! UwU&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">10</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;Round </span><span style="color:#a6d189">{</span>i <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#ef9f76">1</span><span style="color:#a6d189">}</span><span style="color:#a6d189">:&#34;</span>)
+</span></span><span style="display:flex;"><span>        P <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(randint(<span style="color:#ef9f76">1</span>, order <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>), G)
+</span></span><span style="display:flex;"><span>        k <span style="color:#99d1db;font-weight:bold">=</span> randint(<span style="color:#ef9f76">1</span>, order <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>        C1 <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(k, G)
+</span></span><span style="display:flex;"><span>        C2 <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>add(P, squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(k, Q))
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;C1:&#34;</span>, C1)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;C2:&#34;</span>, C2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Now tell me a secret!&#34;</span>)
+</span></span><span style="display:flex;"><span>        secret <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(<span style="color:#99d1db">input</span>(<span style="color:#a6d189">&#34;Secret: &#34;</span>)<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> secret <span style="color:#99d1db;font-weight:bold">==</span> P:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;You got lucky...&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Haha, told you that you don&#39;t know the secret number!&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I am always right! (¬‿¬)&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Well... Umm... Err... I guess you are really lucky...&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> time<span style="color:#99d1db;font-weight:bold">.</span>time() <span style="color:#99d1db;font-weight:bold">-</span> start_time <span style="color:#99d1db;font-weight:bold">&gt;=</span> <span style="color:#ef9f76">30</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;It is a bit late now, I need to go to bed... (｡•́︿•̀｡)&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;I am sleeeeeepy... zzzzz... (￣o￣) . z Z Z&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;https://tinyurl.com/trustworthy-person-UwU&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    flag <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">open</span>(<span style="color:#a6d189">&#34;flag.txt&#34;</span>, <span style="color:#a6d189">&#34;r&#34;</span>)<span style="color:#99d1db;font-weight:bold">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Fine, here is what you wanted to know:&#34;</span>, flag)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;You made me a non-trustworthy person! &gt;.&lt;&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Hope you are happy now! (｡•́︿•̀｡)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#34;Bye! (╯°□°）╯︵ ┻━┻&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> <span style="color:#f2d5cf">__name__</span> <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#a6d189">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>Denote the curve as $E$ , generator as $G$ and secret as $d$.</p>
+<p>In this ZKP protocol, we need to prove that we know the point $P = C_2 - dC_1$ given $C_1 = kG$ and $C_2 = kdG + P$ for random $k$ after $10$ rounds of verification.</p>
+<p>The verification is done via sending 2 points $C_1, C_2$ which we will obtain the point $C_2 - d C_1$ .</p>
+<p>The proving process is basically obtaining 10 pairs of $(C, dC)$ , so we will need to solve the discrete log over $E$, and the curve is safe as well.</p>
+<p>Let&rsquo;s look at the implementation of elliptic curve operations:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ca9ee6">class</span> <span style="color:#e5c890">Point</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">def</span> <span style="color:#8caaee">__init__</span>(<span style="color:#99d1db">self</span>, x, y):
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">=</span> x
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y <span style="color:#99d1db;font-weight:bold">=</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">def</span> <span style="color:#8caaee">is_infinity</span>(<span style="color:#99d1db">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">is</span> <span style="color:#ef9f76">None</span> <span style="color:#99d1db;font-weight:bold">and</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y <span style="color:#99d1db;font-weight:bold">is</span> <span style="color:#ef9f76">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">def</span> <span style="color:#8caaee">__eq__</span>(<span style="color:#99d1db">self</span>, other):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>is_infinity() <span style="color:#99d1db;font-weight:bold">and</span> other<span style="color:#99d1db;font-weight:bold">.</span>is_infinity():
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">==</span> other<span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">and</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y <span style="color:#99d1db;font-weight:bold">==</span> other<span style="color:#99d1db;font-weight:bold">.</span>y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">def</span> <span style="color:#8caaee">__repr__</span>(<span style="color:#99d1db">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>is_infinity():
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span> <span style="color:#a6d189">&#34;Point(infinity)&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> <span style="color:#e78284">f</span><span style="color:#a6d189">&#34;Point(</span><span style="color:#a6d189">{</span><span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x<span style="color:#a6d189">}</span><span style="color:#a6d189">, </span><span style="color:#a6d189">{</span><span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y<span style="color:#a6d189">}</span><span style="color:#a6d189">)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">def</span> <span style="color:#8caaee">__hash__</span>(<span style="color:#99d1db">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>is_infinity():
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">hash</span>((<span style="color:#ef9f76">None</span>, <span style="color:#ef9f76">None</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">hash</span>((<span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x, <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y))
+</span></span></code></pre></div><p>Wait, there&rsquo;s no check on whether a point lies in the curve!
+Since the arithmetic of performing elliptic curve operations on the curve $y^2 = x^3 + Ax + B$ is independent of $B$ , we can obtain a pair $(C, dC)$ on a curve that discrete log is fast, which we picked $y^2 = x^3$ (isomorphic to additive group with a simple mapping)
+So, we can send a point on $y^2=x^3$ and find $d$ easily.</p>
+<h3 id="script-1" >
+<div>
+    <a href="#script-1">
+        ##
+    </a>
+    Script
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">SquigglyStuff</span> <span style="color:#81c8be">import</span> Point, Squiggle, deserialize_point
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">pwn</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">256</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">32</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">9</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">8</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">7</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">6</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">4</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>order <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>squiggle <span style="color:#99d1db;font-weight:bold">=</span> Squiggle(<span style="color:#ef9f76">0</span>, <span style="color:#ef9f76">7</span>, <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">256</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">32</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">9</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">8</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">7</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">6</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">4</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>G <span style="color:#99d1db;font-weight:bold">=</span> Point(
+</span></span><span style="display:flex;"><span>    <span style="color:#ef9f76">0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ef9f76">0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># Consider y^2 = x^3 mod p</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">mod_inverse</span>(a, p):
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">pow</span>(a, p <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span>, p)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">solve_dlog_on_singular_curve</span>(p, xp, yp, xq, yq):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#737994;font-style:italic"># Check points are non-singular (y != 0 implies x != 0 on curve)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> yp <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">0</span> <span style="color:#99d1db;font-weight:bold">or</span> yq <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">ValueError</span>(<span style="color:#a6d189">&#34;Points must be non-singular affine points (y != 0).&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#737994;font-style:italic"># Check points lie on the curve</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> (yp <span style="color:#99d1db;font-weight:bold">*</span> yp) <span style="color:#99d1db;font-weight:bold">%</span> p <span style="color:#99d1db;font-weight:bold">!=</span> (xp <span style="color:#99d1db;font-weight:bold">*</span> xp <span style="color:#99d1db;font-weight:bold">*</span> xp) <span style="color:#99d1db;font-weight:bold">%</span> p:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">ValueError</span>(<span style="color:#a6d189">&#34;P is not on the curve.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> (yq <span style="color:#99d1db;font-weight:bold">*</span> yq) <span style="color:#99d1db;font-weight:bold">%</span> p <span style="color:#99d1db;font-weight:bold">!=</span> (xq <span style="color:#99d1db;font-weight:bold">*</span> xq <span style="color:#99d1db;font-weight:bold">*</span> xq) <span style="color:#99d1db;font-weight:bold">%</span> p:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">ValueError</span>(<span style="color:#a6d189">&#34;Q is not on the curve.&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#737994;font-style:italic"># Compute phi(P) = xp / yp mod p</span>
+</span></span><span style="display:flex;"><span>    phi_p <span style="color:#99d1db;font-weight:bold">=</span> (xp <span style="color:#99d1db;font-weight:bold">*</span> mod_inverse(yp, p)) <span style="color:#99d1db;font-weight:bold">%</span> p
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#737994;font-style:italic"># Compute phi(Q) = xq / yq mod p</span>
+</span></span><span style="display:flex;"><span>    phi_q <span style="color:#99d1db;font-weight:bold">=</span> (xq <span style="color:#99d1db;font-weight:bold">*</span> mod_inverse(yq, p)) <span style="color:#99d1db;font-weight:bold">%</span> p
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#737994;font-style:italic"># Compute k = phi_q / phi_p mod p</span>
+</span></span><span style="display:flex;"><span>    k <span style="color:#99d1db;font-weight:bold">=</span> (phi_q <span style="color:#99d1db;font-weight:bold">*</span> mod_inverse(phi_p, p)) <span style="color:#99d1db;font-weight:bold">%</span> p
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> k
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d <span style="color:#99d1db;font-weight:bold">=</span> randint(<span style="color:#ef9f76">2</span>, order <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>inj <span style="color:#99d1db;font-weight:bold">=</span> Point(<span style="color:#ef9f76">1</span>, <span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>np <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(d, inj)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">assert</span> np<span style="color:#99d1db;font-weight:bold">.</span>y <span style="color:#99d1db;font-weight:bold">**</span> <span style="color:#ef9f76">2</span> <span style="color:#99d1db;font-weight:bold">%</span> p <span style="color:#99d1db;font-weight:bold">==</span> np<span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">**</span> <span style="color:#ef9f76">3</span> <span style="color:#99d1db;font-weight:bold">%</span> p
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">assert</span> d <span style="color:#99d1db;font-weight:bold">==</span> solve_dlog_on_singular_curve(p, <span style="color:#ef9f76">1</span>, <span style="color:#ef9f76">1</span>, np<span style="color:#99d1db;font-weight:bold">.</span>x ,np<span style="color:#99d1db;font-weight:bold">.</span>y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#39;...&#39;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;Q: &#34;</span>)
+</span></span><span style="display:flex;"><span>q <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recv()<span style="color:#99d1db;font-weight:bold">.</span>split(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;</span><span style="color:#8caaee">\r</span><span style="color:#a6d189">&#39;</span>)[<span style="color:#ef9f76">0</span>]<span style="color:#99d1db;font-weight:bold">.</span>decode()<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;x&#39;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C1: &#34;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Point(1, 1)&#39;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C2: &#34;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Point(infinity)&#39;</span>)
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;The thing you need is &#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal_pt <span style="color:#99d1db;font-weight:bold">=</span> chal<span style="color:#99d1db;font-weight:bold">.</span>recv()
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;pt: </span><span style="color:#a6d189">{</span>chal_pt<span style="color:#a6d189">}</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">deserialize_remote</span>(s):
+</span></span><span style="display:flex;"><span>    s <span style="color:#99d1db;font-weight:bold">=</span> s<span style="color:#99d1db;font-weight:bold">.</span>split(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;</span><span style="color:#8caaee">\r</span><span style="color:#a6d189">&#39;</span>)[<span style="color:#ef9f76">0</span>]<span style="color:#99d1db;font-weight:bold">.</span>strip()<span style="color:#99d1db;font-weight:bold">.</span>removeprefix(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;The thing you need is &#39;</span>)
+</span></span><span style="display:flex;"><span>    s <span style="color:#99d1db;font-weight:bold">=</span> s<span style="color:#99d1db;font-weight:bold">.</span>decode(<span style="color:#a6d189">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    s <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(s)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal_pt <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>negate(deserialize_remote(chal_pt))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d <span style="color:#99d1db;font-weight:bold">=</span> solve_dlog_on_singular_curve(p, <span style="color:#ef9f76">1</span>, <span style="color:#ef9f76">1</span>, chal_pt<span style="color:#99d1db;font-weight:bold">.</span>x, chal_pt<span style="color:#99d1db;font-weight:bold">.</span>y)
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">assert</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(d , G) <span style="color:#99d1db;font-weight:bold">==</span> q
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;y&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">1</span> , <span style="color:#ef9f76">11</span>):
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;Round </span><span style="color:#a6d189">{</span>i<span style="color:#a6d189">}</span><span style="color:#a6d189">:&#39;</span>)
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C1: &#34;</span>)
+</span></span><span style="display:flex;"><span>    c1 <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>decode()<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C2: &#34;</span>)
+</span></span><span style="display:flex;"><span>    c2 <span style="color:#99d1db;font-weight:bold">=</span> deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>decode()<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>    P <span style="color:#99d1db;font-weight:bold">=</span> squiggle<span style="color:#99d1db;font-weight:bold">.</span>add(squiggle<span style="color:#99d1db;font-weight:bold">.</span>negate(squiggle<span style="color:#99d1db;font-weight:bold">.</span>mul(d, c1)), c2)
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Now tell me a secret!</span><span style="color:#8caaee">\r\n</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Secret: &#39;</span>)
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;Point(</span><span style="color:#a6d189">{</span>P<span style="color:#99d1db;font-weight:bold">.</span>x<span style="color:#a6d189">}</span><span style="color:#a6d189">, </span><span style="color:#a6d189">{</span>P<span style="color:#99d1db;font-weight:bold">.</span>y<span style="color:#a6d189">}</span><span style="color:#a6d189">)&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">while</span> <span style="color:#ef9f76">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline())
+</span></span></code></pre></div><h2 id="trustworthy-person-revenge" >
+<div>
+    <a href="#trustworthy-person-revenge">
+        #
+    </a>
+    Trustworthy Person Revenge
+</div>
+</h2>
+<p>Now, there is a check on whether a point lies on the curve, but only partially:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">normalize</span>(<span style="color:#99d1db">self</span>, P):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> P<span style="color:#99d1db;font-weight:bold">.</span>is_infinity():
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span> P
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#737994;font-style:italic"># PATCHED UWU</span>
+</span></span><span style="display:flex;"><span>        new_x <span style="color:#99d1db;font-weight:bold">=</span> P<span style="color:#99d1db;font-weight:bold">.</span>x <span style="color:#99d1db;font-weight:bold">%</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>p
+</span></span><span style="display:flex;"><span>        new_y <span style="color:#99d1db;font-weight:bold">=</span> P<span style="color:#99d1db;font-weight:bold">.</span>y <span style="color:#99d1db;font-weight:bold">%</span> <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>p
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> <span style="color:#99d1db">pow</span>(new_x, <span style="color:#ef9f76">3</span>, <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>p) <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">pow</span>(new_y, <span style="color:#ef9f76">2</span>, <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>p):
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">ValueError</span>(<span style="color:#a6d189">&#34;U DOING SOMETHING BAD BAD &gt;.&lt;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#737994;font-style:italic"># END PATCHED</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> Point(new_x, new_y)
+</span></span></code></pre></div><p>So now we cannot send points on $y^2 = x^3$ , but the server still allows other points not on the the original curve.</p>
+<p>But still, we can send other points on $y^2 = x^3 + B$ , which the order isn&rsquo;t prime. We then send generators of cyclic subgroups with small orders ${n_1,&hellip;,n_{10}}$ on these curves, and obtain a list of residues ${r_1,&hellip;,r_{10}}$ of $d$ by discrete log on the groups, lifting to $d$ mod some large modulus $n$. We can find $d$ immediately the modulus is greater than upper bound of $d$ , or recover it by solving dlog with pollard&rsquo;s lambda.
+$$
+\begin{align*}
+dG &amp;= Q \\
+(a + kn)G &amp;= Q \\
+k(nG) &amp;= Q - aG
+\end{align*}
+$$</p>
+<p>To find these curves and subgroups , we can loop through order of $y^2 = x^3 + B$
+and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group easily. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.</p>
+<p>Unfortunately, the set of orders really isn&rsquo;t that big (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.</p>
+<p>There is a time constraint of 30s on the server, so we will definitely have to optimize the order we use.</p>
+<h3 id="find-curves" >
+<div>
+    <a href="#find-curves">
+        ##
+    </a>
+    Find curves
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">get_factors</span>(order):
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">list</span>(factor(order))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">find_curve_with_prime_factor</span>(args<span style="color:#99d1db;font-weight:bold">=</span>[<span style="color:#ef9f76">1</span>, p]):
+</span></span><span style="display:flex;"><span>    b, p <span style="color:#99d1db;font-weight:bold">=</span> args
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;factoring </span><span style="color:#a6d189">{</span>b<span style="color:#a6d189">}</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>        E_test <span style="color:#99d1db;font-weight:bold">=</span> EllipticCurve(GF(p), [<span style="color:#ef9f76">0</span>, b])
+</span></span><span style="display:flex;"><span>        order <span style="color:#99d1db;font-weight:bold">=</span> E_test<span style="color:#99d1db;font-weight:bold">.</span>order()
+</span></span><span style="display:flex;"><span>        l <span style="color:#99d1db;font-weight:bold">=</span> get_factors(order)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> l
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">with</span> <span style="color:#99d1db">open</span>(<span style="color:#a6d189">&#39;fact.txt&#39;</span>, <span style="color:#a6d189">&#39;a&#39;</span>) <span style="color:#ca9ee6">as</span> f:
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1000</span>, <span style="color:#ef9f76">1000</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> i <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">continue</span>
+</span></span><span style="display:flex;"><span>        order_t <span style="color:#99d1db;font-weight:bold">=</span> EllipticCurve(Zmod(p), [<span style="color:#ef9f76">0</span>, i])<span style="color:#99d1db;font-weight:bold">.</span>order()
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;</span><span style="color:#a6d189">{</span>i<span style="color:#a6d189">}</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> order_t <span style="color:#99d1db;font-weight:bold">in</span> order_list:
+</span></span><span style="display:flex;"><span>            <span style="color:#99d1db">print</span>(<span style="color:#a6d189">&#39;y&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">continue</span>
+</span></span><span style="display:flex;"><span>        fact <span style="color:#99d1db;font-weight:bold">=</span> find_curve_with_prime_factor([i, p])
+</span></span><span style="display:flex;"><span>        factor_tuple <span style="color:#99d1db;font-weight:bold">=</span> (i, fact, mult(fact))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        f<span style="color:#99d1db;font-weight:bold">.</span>write(<span style="color:#99d1db">str</span>(factor_tuple) <span style="color:#99d1db;font-weight:bold">+</span> <span style="color:#a6d189">&#39;</span><span style="color:#8caaee">\n</span><span style="color:#a6d189">&#39;</span>)
+</span></span></code></pre></div><h3 id="list-of-orders-and-curve-they-correspond-to" >
+<div>
+    <a href="#list-of-orders-and-curve-they-correspond-to">
+        ##
+    </a>
+    List of orders and curve they correspond to
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># I picked these manually from the file</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># The curves have the structure:</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># 4: cyclic</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># 9: Z_3 x ...</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># 183: Z_14 x ...</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># 33: cyclic</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># -10: Z_2 x ...</span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># then we find generators in the larger group</span>
+</span></span><span style="display:flex;"><span>b_list <span style="color:#99d1db;font-weight:bold">=</span> [<span style="color:#ef9f76">4</span>, <span style="color:#ef9f76">9</span>, <span style="color:#ef9f76">9</span>, <span style="color:#ef9f76">183</span>, <span style="color:#ef9f76">183</span>, <span style="color:#ef9f76">183</span>, <span style="color:#ef9f76">33</span>, <span style="color:#ef9f76">33</span>, <span style="color:#ef9f76">33</span>, <span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">10</span>]
+</span></span><span style="display:flex;"><span>l1 <span style="color:#99d1db;font-weight:bold">=</span> [<span style="color:#ef9f76">3</span> <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">199</span> <span style="color:#99d1db;font-weight:bold">*</span> <span style="color:#ef9f76">18979</span>, <span style="color:#ef9f76">13</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">3319</span>, <span style="color:#ef9f76">22639</span>, <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">7</span><span style="color:#99d1db;font-weight:bold">*</span><span style="color:#ef9f76">10903</span>, <span style="color:#ef9f76">5290657</span>, <span style="color:#ef9f76">10833080827</span>, <span style="color:#ef9f76">109903</span>, <span style="color:#ef9f76">12977017</span>, <span style="color:#ef9f76">383229727</span>, <span style="color:#ef9f76">20412485227</span>]
+</span></span></code></pre></div><h3 id="constructing-generators" >
+<div>
+    <a href="#constructing-generators">
+        ##
+    </a>
+    Constructing generators
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pt_send <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">for</span> b, ord_try <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">zip</span>(b_list, l1):
+</span></span><span style="display:flex;"><span>    F <span style="color:#99d1db;font-weight:bold">=</span> Zmod(p)
+</span></span><span style="display:flex;"><span>    ec <span style="color:#99d1db;font-weight:bold">=</span> EllipticCurve(F, [<span style="color:#ef9f76">0</span>, b])
+</span></span><span style="display:flex;"><span>    pt <span style="color:#99d1db;font-weight:bold">=</span> ec<span style="color:#99d1db;font-weight:bold">.</span>random_point() 
+</span></span><span style="display:flex;"><span>    pt <span style="color:#99d1db;font-weight:bold">=</span> pt <span style="color:#99d1db;font-weight:bold">*</span> (pt<span style="color:#99d1db;font-weight:bold">.</span>order() <span style="color:#99d1db;font-weight:bold">//</span> ord_try)
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(pt<span style="color:#99d1db;font-weight:bold">.</span>order() <span style="color:#99d1db;font-weight:bold">%</span> ord_try)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> pt<span style="color:#99d1db;font-weight:bold">.</span>order() <span style="color:#99d1db;font-weight:bold">!=</span> ord_try:
+</span></span><span style="display:flex;"><span>        pt <span style="color:#99d1db;font-weight:bold">=</span> ec<span style="color:#99d1db;font-weight:bold">.</span>random_point() 
+</span></span><span style="display:flex;"><span>        pt <span style="color:#99d1db;font-weight:bold">=</span> pt <span style="color:#99d1db;font-weight:bold">*</span> (pt<span style="color:#99d1db;font-weight:bold">.</span>order() <span style="color:#99d1db;font-weight:bold">//</span> ord_try)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> pt<span style="color:#99d1db;font-weight:bold">.</span>order() <span style="color:#99d1db;font-weight:bold">%</span> ord_try <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">0</span>
+</span></span><span style="display:flex;"><span>    pt_send<span style="color:#99d1db;font-weight:bold">.</span>append(pt<span style="color:#99d1db;font-weight:bold">.</span>xy())
+</span></span></code></pre></div><h3 id="solve" >
+<div>
+    <a href="#solve">
+        ##
+    </a>
+    Solve
+</div>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">256</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">32</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">9</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">8</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">7</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">6</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">2</span><span style="color:#99d1db;font-weight:bold">**</span><span style="color:#ef9f76">4</span> <span style="color:#99d1db;font-weight:bold">-</span> <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span>F <span style="color:#99d1db;font-weight:bold">=</span> Zmod(p)
+</span></span><span style="display:flex;"><span>ori_order <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#ef9f76">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141</span>
+</span></span><span style="display:flex;"><span>ec_ori <span style="color:#99d1db;font-weight:bold">=</span> EllipticCurve(Zmod(p), [<span style="color:#ef9f76">0</span>, <span style="color:#ef9f76">7</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">pwn</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">SquigglyStuff</span> <span style="color:#81c8be">import</span> deserialize_point
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">serialize_point</span>(t):
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#e78284">f</span><span style="color:#a6d189">&#34;Point(</span><span style="color:#a6d189">{</span>t[<span style="color:#ef9f76">0</span>]<span style="color:#a6d189">}</span><span style="color:#a6d189">, </span><span style="color:#a6d189">{</span>t[<span style="color:#ef9f76">1</span>]<span style="color:#a6d189">}</span><span style="color:#a6d189">)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">deserialize_point</span>(s):
+</span></span><span style="display:flex;"><span>    s <span style="color:#99d1db;font-weight:bold">=</span> s<span style="color:#99d1db;font-weight:bold">.</span>split(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;</span><span style="color:#8caaee">\r</span><span style="color:#a6d189">&#39;</span>)[<span style="color:#ef9f76">0</span>]<span style="color:#99d1db;font-weight:bold">.</span>decode()<span style="color:#99d1db;font-weight:bold">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> s <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#a6d189">&#34;Point(infinity)&#34;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> (<span style="color:#ef9f76">0</span>, <span style="color:#ef9f76">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">else</span>:
+</span></span><span style="display:flex;"><span>        pattern <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#e78284">r</span><span style="color:#a6d189">&#34;Point\(\d+, \d+\)&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">match</span> <span style="color:#99d1db;font-weight:bold">=</span> re<span style="color:#99d1db;font-weight:bold">.</span><span style="color:#ca9ee6">match</span>(pattern, s)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">if</span> <span style="color:#99d1db;font-weight:bold">not</span> <span style="color:#ca9ee6">match</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">raise</span> <span style="color:#ef9f76">ValueError</span>(<span style="color:#e78284">f</span><span style="color:#a6d189">&#34;Invalid point format: </span><span style="color:#a6d189">{</span>s<span style="color:#a6d189">}</span><span style="color:#a6d189">&#34;</span>)
+</span></span><span style="display:flex;"><span>        arr <span style="color:#99d1db;font-weight:bold">=</span> s[<span style="color:#ef9f76">6</span>:<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>]<span style="color:#99d1db;font-weight:bold">.</span>split(<span style="color:#a6d189">&#34;, &#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> (<span style="color:#99d1db">int</span>(arr[<span style="color:#ef9f76">0</span>]), <span style="color:#99d1db">int</span>(arr[<span style="color:#ef9f76">1</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8caaee;font-weight:bold">@parallel</span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">dlog</span>(ec, chal_pt, pt, order):
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> (<span style="color:#99d1db">int</span>(pari<span style="color:#99d1db;font-weight:bold">.</span>elllog(ec, chal_pt, pt)), order)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">while</span> <span style="color:#ef9f76">True</span>:
+</span></span><span style="display:flex;"><span>    chal <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#39;...&#39;</span>)
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;Q: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Q <span style="color:#99d1db;font-weight:bold">=</span> ec_ori(deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recv())) <span style="color:#737994;font-style:italic"># modified</span>
+</span></span><span style="display:flex;"><span>    chal_pt_list <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span>    res_list <span style="color:#99d1db;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">10</span>):
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;x&#39;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C1: &#34;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(serialize_point(pt_send[i]))
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C2: &#34;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Point(infinity)&#39;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;The thing you need is &#39;</span>)
+</span></span><span style="display:flex;"><span>        chal_pt <span style="color:#99d1db;font-weight:bold">=</span> chal<span style="color:#99d1db;font-weight:bold">.</span>recv()
+</span></span><span style="display:flex;"><span>        chal_pt_list<span style="color:#99d1db;font-weight:bold">.</span>append(deserialize_point(chal_pt))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(chal_pt_list)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    F <span style="color:#99d1db;font-weight:bold">=</span> Zmod(p)
+</span></span><span style="display:flex;"><span>    ec_fac_list <span style="color:#99d1db;font-weight:bold">=</span> [EllipticCurve(F, [<span style="color:#ef9f76">0</span>, b]) <span style="color:#ca9ee6">for</span> b <span style="color:#99d1db;font-weight:bold">in</span> b_list]
+</span></span><span style="display:flex;"><span>    pt_ec <span style="color:#99d1db;font-weight:bold">=</span> [ec(pt) <span style="color:#ca9ee6">for</span> ec, pt <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">zip</span>(ec_fac_list, pt_send)]
+</span></span><span style="display:flex;"><span>    chal_pt <span style="color:#99d1db;font-weight:bold">=</span> [<span style="color:#99d1db;font-weight:bold">-</span>ec(pt) <span style="color:#ca9ee6">for</span> ec, pt <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">zip</span>(ec_fac_list, chal_pt_list)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">list</span>(<span style="color:#99d1db">zip</span>(ec_fac_list, chal_pt, pt_ec, l1))
+</span></span><span style="display:flex;"><span>    start_time <span style="color:#99d1db;font-weight:bold">=</span> time<span style="color:#99d1db;font-weight:bold">.</span>time()
+</span></span><span style="display:flex;"><span>    res_list <span style="color:#99d1db;font-weight:bold">=</span> [i[<span style="color:#99d1db;font-weight:bold">-</span><span style="color:#ef9f76">1</span>] <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">list</span>(dlog(tmp))]
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(res_list)
+</span></span><span style="display:flex;"><span>    t <span style="color:#99d1db;font-weight:bold">=</span> time<span style="color:#99d1db;font-weight:bold">.</span>time()<span style="color:#99d1db;font-weight:bold">-</span>start_time
+</span></span><span style="display:flex;"><span>    <span style="color:#99d1db">print</span>(t)
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">if</span> t <span style="color:#99d1db;font-weight:bold">&gt;</span> <span style="color:#ef9f76">30</span>: <span style="color:#737994;font-style:italic"># time constraint</span>
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>close()
+</span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    d_res <span style="color:#99d1db;font-weight:bold">=</span> CRT_list(<span style="color:#99d1db;font-weight:bold">*</span><span style="color:#99d1db">list</span>(<span style="color:#99d1db">map</span>(<span style="color:#99d1db">list</span>, <span style="color:#99d1db">zip</span>(<span style="color:#99d1db;font-weight:bold">*</span>res_list))))
+</span></span><span style="display:flex;"><span>    lifted <span style="color:#99d1db;font-weight:bold">=</span> lcm(l1)
+</span></span><span style="display:flex;"><span>    G <span style="color:#99d1db;font-weight:bold">=</span> ec_ori(
+</span></span><span style="display:flex;"><span>        <span style="color:#ef9f76">0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ef9f76">0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8</span>,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    k <span style="color:#99d1db;font-weight:bold">=</span> discrete_log_lambda(Q <span style="color:#99d1db;font-weight:bold">-</span> d_res <span style="color:#99d1db;font-weight:bold">*</span> G, lifted<span style="color:#99d1db;font-weight:bold">*</span>G, (<span style="color:#ef9f76">1</span>, ori_order<span style="color:#99d1db;font-weight:bold">//</span>lcm(l1)<span style="color:#99d1db;font-weight:bold">+</span><span style="color:#ef9f76">1</span>), operation<span style="color:#99d1db;font-weight:bold">=</span><span style="color:#a6d189">&#39;+&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> (d_res <span style="color:#99d1db;font-weight:bold">+</span> k <span style="color:#99d1db;font-weight:bold">*</span> lifted) <span style="color:#99d1db;font-weight:bold">*</span> G <span style="color:#99d1db;font-weight:bold">==</span> Q
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    d <span style="color:#99d1db;font-weight:bold">=</span> d_res <span style="color:#99d1db;font-weight:bold">+</span> k <span style="color:#99d1db;font-weight:bold">*</span> lifted
+</span></span><span style="display:flex;"><span>    chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;y&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">for</span> i <span style="color:#99d1db;font-weight:bold">in</span> <span style="color:#99d1db">range</span>(<span style="color:#ef9f76">1</span> , <span style="color:#ef9f76">11</span>):
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;Round </span><span style="color:#a6d189">{</span>i<span style="color:#a6d189">}</span><span style="color:#a6d189">:&#39;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C1: &#34;</span>)
+</span></span><span style="display:flex;"><span>        c1 <span style="color:#99d1db;font-weight:bold">=</span> ec_ori(deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline()))
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#34;C2: &#34;</span>)
+</span></span><span style="display:flex;"><span>        c2 <span style="color:#99d1db;font-weight:bold">=</span> ec_ori(deserialize_point(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline()))
+</span></span><span style="display:flex;"><span>        P <span style="color:#99d1db;font-weight:bold">=</span> c2 <span style="color:#99d1db;font-weight:bold">-</span> d <span style="color:#99d1db;font-weight:bold">*</span> c1
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Now tell me a secret!</span><span style="color:#8caaee">\r\n</span><span style="color:#a6d189">&#39;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#e78284">b</span><span style="color:#a6d189">&#39;Secret: &#39;</span>)
+</span></span><span style="display:flex;"><span>        chal<span style="color:#99d1db;font-weight:bold">.</span>sendline(<span style="color:#e78284">f</span><span style="color:#a6d189">&#39;Point(</span><span style="color:#a6d189">{</span>P<span style="color:#99d1db;font-weight:bold">.</span>x()<span style="color:#a6d189">}</span><span style="color:#a6d189">, </span><span style="color:#a6d189">{</span>P<span style="color:#99d1db;font-weight:bold">.</span>y()<span style="color:#a6d189">}</span><span style="color:#a6d189">)&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">while</span> <span style="color:#ef9f76">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#99d1db">print</span>(chal<span style="color:#99d1db;font-weight:bold">.</span>recvline())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">#13.43s</span>
+</span></span></code></pre></div><h3 id="afterwords" >
+<div>
+    <a href="#afterwords">
+        ##
+    </a>
+    Afterwords
+</div>
+</h3>
+<blockquote>
+<p>Initially, I thought the order of cyclic group has to be a prime which had me in dlogging in a group of order ~ $10^{12}$ , thus failing the time constraint (1-min solve).
+I did figured out some ways to make the solve script to run faster without fixing the main logic tho.</p></blockquote>
+<ul>
+<li>Parallelizing (implemented)</li>
+<li>Calling pari_ecllog (implemented)</li>
+<li>Increasing memory in WSL (this speeds up the script up by margins)</li>
+<li>Precomputing baby steps in bsgs (I failed cuz not enough RAM when loading 10^8 points, and I eventually gave up)</li>
+</ul>
+<p>Indeed, now I know that I don&rsquo;t know abstract algebra :cry:</p>
+
+        </div>
+
+    </article>
+
+    
+    
+
+    
+        
+        
+    
+
+    
+
+    
+        
+
+
+    
+
+    
+
+    
+    
+    
+        <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+
+        </main>
+        
+            <footer class="common-footer noselect">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+
+        <div style="display: flex; align-items: center; gap:8px">
+            ©  qslg154,  2025
+            
+        </div>
+        <div style="display:flex; align-items: center; gap:4px">
+
+            
+            
+
+            
+            
+            
+            
+
+            
+            
+
+            
+        </div>
+        
+            <div>
+                Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/hugo-theme-anubis2/hugo-theme-anubis2">Anubis2</a>.<br>
+            </div>
+        
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=//localhost:1313/ class="p-name u-url url fn" rel="me">map[name:qslg154]</a>
+
+    
+
+    
+</p>
+
+</footer>
+
+        
+    </div>
+</body>
+</html>
