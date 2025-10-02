@@ -18,7 +18,7 @@
 
 <title>cuhk ctf 2025 - qslg154</title>
 
-<meta name="description" content="Played the ctf with the team Grey Bricks, and we solved all crypto, most are pretty standard tho unfortunately.
+<meta name="description" content="Played the ctf with the team Grey Bricks, and we solved all crypto, I also solved some rev and pwn challs.
 
 
     
@@ -513,7 +513,7 @@ Where $ |, ⅋ $ denote the bitwise or/and, and $m$ is the flag and $k$ is a ran
 </script>
 
         <div class="content e-content">
-            <p>Played the ctf with the team <em>Grey Bricks</em>, and we solved all crypto, most are pretty standard tho unfortunately.</p>
+            <p>Played the ctf with the team <em>Grey Bricks</em>, and we solved all crypto, I also solved some rev and pwn challs.</p>
 <h2 id="schrödingers-encryption" >
 <div>
     <a href="#schr%c3%b6dingers-encryption">
@@ -774,7 +774,7 @@ Where $ |, ⅋ $ denote the bitwise or/and, and $m$ is the flag and $k$ is a ran
 </span></span><span style="display:flex;"><span>            <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">hash</span>((<span style="color:#ef9f76">None</span>, <span style="color:#ef9f76">None</span>))
 </span></span><span style="display:flex;"><span>        <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">hash</span>((<span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>x, <span style="color:#99d1db">self</span><span style="color:#99d1db;font-weight:bold">.</span>y))
 </span></span></code></pre></div><p>Wait, there&rsquo;s no check on whether a point lies in the curve!
-Since the arithmetic of performing elliptic curve operations on the curve $y^2 = x^3 + Ax + B$ is independent of $B$ , we can obtain a pair $(C, dC)$ on a curve that discrete log is fast, which we picked $y^2 = x^3$ (isomorphic to additive group with a simple mapping)
+Since the arithmetic of performing elliptic curve operations on the curve $y^2 = x^3 + Ax + B$ is independent of $B$ , we can obtain a pair $(C, dC)$ on a curve that discrete log is fast, which we picked $y^2 = x^3$ (isomorphic to additive group with a simple mapping $P \rightarrow y/x$)
 So, we can send a point on $y^2=x^3$ and find $d$ easily.</p>
 <h3 id="script-1" >
 <div>
@@ -901,8 +901,8 @@ k(nG) &amp;= Q - aG
 \end{align*}
 $$</p>
 <p>To find these curves and subgroups , we can loop through order of $y^2 = x^3 + B$
-and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group easily. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.</p>
-<p>Unfortunately, the set of orders really isn&rsquo;t that big (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.</p>
+and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group by taking a random point in a large subgroup. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.</p>
+<p>Unfortunately, the set of orders really isn&rsquo;t that big<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.</p>
 <p>There is a time constraint of 30s on the server, so we will definitely have to optimize the order we use.</p>
 <h3 id="find-curves" >
 <div>
@@ -1095,6 +1095,14 @@ I did figured out some ways to make the solve script to run faster without fixin
 <li>Precomputing baby steps in bsgs (I failed cuz not enough RAM when loading 10^8 points, and I eventually gave up)</li>
 </ul>
 <p>Indeed, now I know that I don&rsquo;t know abstract algebra :cry:</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>After some computations, I found that if p - 1 mod 3 = 0, then there is 6 unique orders only, inc. one prime. The details can be seen at <a href="https://core.ac.uk/download/pdf/12529914.pdf">https://core.ac.uk/download/pdf/12529914.pdf</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
         </div>
 

@@ -5,7 +5,7 @@ title = 'cuhk ctf 2025'
 math = true
 +++
 
-Played the ctf with the team *Grey Bricks*, and we solved all crypto, most are pretty standard tho unfortunately.
+Played the ctf with the team *Grey Bricks*, and we solved all crypto, I also solved some rev and pwn challs.
 
 ## Schrödinger's Encryption
 
@@ -267,7 +267,7 @@ class Point:
 ```
 
 Wait, there's no check on whether a point lies in the curve!
-Since the arithmetic of performing elliptic curve operations on the curve $y^2 = x^3 + Ax + B$ is independent of $B$ , we can obtain a pair $(C, dC)$ on a curve that discrete log is fast, which we picked $y^2 = x^3$ (isomorphic to additive group with a simple mapping)
+Since the arithmetic of performing elliptic curve operations on the curve $y^2 = x^3 + Ax + B$ is independent of $B$ , we can obtain a pair $(C, dC)$ on a curve that discrete log is fast, which we picked $y^2 = x^3$ (isomorphic to additive group with a simple mapping $P \rightarrow y/x$)
 So, we can send a point on $y^2=x^3$ and find $d$ easily.
 
 ### Script
@@ -390,9 +390,9 @@ k(nG) &= Q - aG
 $$
 
 To find these curves and subgroups , we can loop through order of $y^2 = x^3 + B$
-and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group easily. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.
+and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group by taking a random point in a large subgroup. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.
 
-Unfortunately, the set of orders really isn't that big (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this. 
+Unfortunately, the set of orders really isn't that big[^1] (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.
 
 There is a time constraint of 30s on the server, so we will definitely have to optimize the order we use.
 
@@ -565,4 +565,4 @@ while True:
 
 Indeed, now I know that I don't know abstract algebra :cry:
 
-
+[^1]: After some computations, I found that if p - 1 mod 3 = 0, then there is 6 unique orders only, inc. one prime. The details can be seen at https://core.ac.uk/download/pdf/12529914.pdf

@@ -413,7 +413,7 @@ k(nG) &amp;amp;= Q - aG
 $$&lt;/p&gt;
 &lt;p&gt;To find these curves and subgroups , we can loop through order of $y^2 = x^3 + B$
 and factorize it, and then since elliptic curves over $F_p$ is isomorphic to either cyclic group or product of two cyclic groups, we can also find the generators of small cyclic group easily. Ideally the order of each generators should be around ~$2^{25.6}$ to minimize the total runtime.&lt;/p&gt;
-&lt;p&gt;Unfortunately, the set of orders really isn&amp;rsquo;t that big (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the set of orders really isn&amp;rsquo;t that big&lt;sup&gt;[1]&lt;/sup&gt; (I can only find 6 curves with distinct order, and one is prime) and we will have to opt for some groups with larger orders to compensate for this.&lt;/p&gt;
 &lt;p&gt;There is a time constraint of 30s on the server, so we will definitely have to optimize the order we use.&lt;/p&gt;
 &lt;h3 id=&#34;find-curves&#34; &gt;
 &lt;div&gt;
@@ -606,6 +606,7 @@ I did figured out some ways to make the solve script to run faster without fixin
 &lt;li&gt;Precomputing baby steps in bsgs (I failed cuz not enough RAM when loading 10^8 points, and I eventually gave up)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Indeed, now I know that I don&amp;rsquo;t know abstract algebra :cry:&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;[1]&lt;/sup&gt; See &lt;a href=&#34;https://core.ac.uk/download/pdf/12529914.pdf&#34;&gt;https://core.ac.uk/download/pdf/12529914.pdf&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
