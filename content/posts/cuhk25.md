@@ -484,7 +484,7 @@ def deserialize_point(s):
 
 @parallel
 def dlog(ec, chal_pt, pt, order):
-    return (int(pari.elllog(ec, chal_pt, pt)), order)
+    return (int(pari.elllog(ec, chal_pt, pt, order)), order)
 
 while True:
     chal = remote('...')
@@ -558,6 +558,7 @@ while True:
 > Initially, I thought the order of cyclic group has to be a prime which had me in dlogging in a group of order ~ $10^{12}$ , thus failing the time constraint (1-min solve). 
 > I did figured out some ways to make the solve script to run faster without fixing the main logic tho.
 
+- calling dlog with order (I forgot about it at first also, big mistake)
 - Parallelizing (implemented)
 - Calling pari_ecllog (implemented)
 - Increasing memory in WSL (this speeds up the script up by margins)
