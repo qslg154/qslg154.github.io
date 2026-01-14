@@ -13,10 +13,136 @@
     
 
     
-    <lastBuildDate>Wed, 01 Oct 2025 20:17:16 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 12:04:01 +0800</lastBuildDate>
     
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Resultant Notes</title>
+      <link>/posts/resultant-notes/</link>
+      <pubDate>Wed, 14 Jan 2026 12:04:01 +0800</pubDate>
+      
+      <guid>/posts/resultant-notes/</guid>
+      <description>&lt;h2 id=&#34;multiplication-as-linear-map&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#multiplication-as-linear-map&#34;&gt;
+        #
+    &lt;/a&gt;
+    Multiplication as linear map
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;Let $p, q$ have degree $m, n\geq 1$ and $R$ be an integral domain.
+Consider the linear map $\phi : R_{n-1}[x]\times R_{m-1}[x] \rightarrow R_{a+b-1}[x]$ by:
+$$\phi(r, s) = pr + qs$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Theorem 1&lt;/em&gt;
+$\mathrm{Im}\ \phi$  is isomorphic to some $kR_{a+b-1}[x]$ for $k \in R$ if and only if $p, q$ don&amp;rsquo;t have a common factor of positive degree over $Frac(R)$.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Proof&lt;/em&gt;: If $\phi$ is invertible, then $\phi(r, s) = pr+qs = c$ for some $r, s$ since $\phi$ is surjective. The constant polynomial $c$ assert that no such factor exist. Conversely, if $p, q$ don&amp;rsquo;t have such factor then we can consider the equation $pr = -qs$ , since $p, q$ are coprime over $Frac(R)$,&lt;br&gt;
+$p$ must divide $s$ , but $\deg s &amp;lt; m$ so $s = 0$ . Similarly $r=0$ , we have $\ker \phi = {(0, 0)}$, so $\phi$ is injective, thus is an isomorphism .&lt;/p&gt;
+&lt;p&gt;We can write out the matrix of $\phi$ and calculate its determinant to determine whether $\phi$ is an isomorphism, and whether $p, q$ have a common factor (thus common zero possibly over some field extension)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Remark:&lt;/em&gt; The condition of common factor over $Frac$ is to prevent issues of non-UFD&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;defining-the-resultant&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#defining-the-resultant&#34;&gt;
+        #
+    &lt;/a&gt;
+    Defining the resultant
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;Let $p = a_mx^m+&amp;hellip;+a_0, q = b_n^n+&amp;hellip;+b_0$
+The matrix of $\phi$ , under the basis ${1, x, x^2, &amp;hellip;, x^{m+n-1}}$ is:&lt;/p&gt;
+&lt;p&gt;$$M = Mat(\phi)= \begin{pmatrix}
+a_0      &amp;amp; 0           &amp;amp; \cdots &amp;amp; 0          &amp;amp; b_0        &amp;amp; 0              &amp;amp; \cdots &amp;amp; 0       \
+a_1    &amp;amp; a_0       &amp;amp; \cdots &amp;amp; 0           &amp;amp; b_1     &amp;amp; b_0           &amp;amp; \cdots &amp;amp; 0  \
+a_2    &amp;amp; a_1     &amp;amp; \ddots &amp;amp; 0           &amp;amp; b_2     &amp;amp; b_1         &amp;amp; \ddots &amp;amp; 0 \
+\vdots  &amp;amp;\vdots   &amp;amp; \ddots &amp;amp; a_0        &amp;amp; \vdots   &amp;amp;\vdots       &amp;amp; \ddots &amp;amp; b_0  \
+a_m       &amp;amp; a_{m-1} &amp;amp; \cdots &amp;amp; \vdots   &amp;amp; b_n       &amp;amp; b_{n-1}     &amp;amp; \cdots &amp;amp; \vdots\
+0          &amp;amp; a_m       &amp;amp; \ddots &amp;amp;  \vdots  &amp;amp; 0          &amp;amp; b_n          &amp;amp; \ddots &amp;amp;  \vdots  \
+\vdots  &amp;amp; \vdots   &amp;amp; \ddots &amp;amp; a_{m-1}  &amp;amp; \vdots  &amp;amp; \vdots      &amp;amp; \ddots &amp;amp; b_{n-1}   \
+0          &amp;amp; 0          &amp;amp; \cdots  &amp;amp; a_m       &amp;amp; 0           &amp;amp; 0              &amp;amp; \cdots &amp;amp; b_n&lt;br&gt;
+\end{pmatrix}$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is called the &lt;em&gt;Sylvester matrix&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;We can define the resultant of $p, q$: $\mathrm{Res}(p, q) = \det(M)$ , since for any polynomial $f$,
+$f$ has repeated root if and only $f, f&amp;rsquo;$ has common zero, we can define $\mathrm{Disc}(f)$ = $\mathrm{Res}(f, f&amp;rsquo;)$ .&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Corollary 2:&lt;/em&gt; $Res(p, q) = 0$ if and only $p, q$ share common zeros (possibly over some field extensions)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;cool-applications&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#cool-applications&#34;&gt;
+        #
+    &lt;/a&gt;
+    Cool applications
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Theorem 3:&lt;/em&gt; $\bar{\mathbb{Q}}$ set of algebraic number is closed under addition and multiplication&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The idea is to use resultant to construct some bivariate polynomial such that when taking resultant regarding to some variable, we have the resultant, which is a single variable polynomial vanish at the points we need.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Proof:&lt;/em&gt; let $x, y \in \bar{\mathbb{Q}}$ , then $p(x) = q(y) = 0$ for some $p, q$ $\in \mathbb{Q}[x]$ .
+The polynomial
+$$ r(z) = \mathrm{Res}_x(p(x), q(z-x)) $$
+has root $x+y$ , and the polynomial
+$$ t(z) = \mathrm{Res}_x(p(x), x^nq(z/x))$$
+has root $xy$ .&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Such proof applies for $\bar{\mathbb{Z}}$ also.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The method of resultant also comes handy for constructing polynomials for coppersmith attack.&lt;/p&gt;
+&lt;h3 id=&#34;hkcert2025-bivariate-copper&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#hkcert2025-bivariate-copper&#34;&gt;
+        ##
+    &lt;/a&gt;
+    hkcert2025: Bivariate Copper
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;Crypto.Util.number&lt;/span&gt; &lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81c8be&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;sage.all&lt;/span&gt; &lt;span style=&#34;color:#81c8be&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;message &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;?&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;flag &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e78284&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;?&amp;#39;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;m &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; bytes_to_long(flag)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;message &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; bytes_to_long(message)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;p &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;1024&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;q &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;25&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;N &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; p &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; q
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;e &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;65537&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;c &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#99d1db&#34;&gt;pow&lt;/span&gt;(message, e, N)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;r1, r2 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;512&lt;/span&gt;), getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;512&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;k &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; getPrime(&lt;span style=&#34;color:#ef9f76&#34;&gt;64&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;T1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; (k &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; inverse(m &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; r1, p)) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;%&lt;/span&gt; p
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;T2 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; (k &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;*&lt;/span&gt; inverse(m &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;+&lt;/span&gt; r2, p)) &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;%&lt;/span&gt; p
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;l1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; T1 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;244&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;l2 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; T2 &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;244&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{e = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{N = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{c = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{k = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{r1 = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{r2 = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{leak1 = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#737994;font-style:italic&#34;&gt;# print(f&amp;#39;{leak2 = }&amp;#39;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We can factor $N$ easily by brute force, and notice that we have&lt;/p&gt;
+&lt;p&gt;$$\begin{align} T_i(m+r_i) - k = 0 \pmod{p}\\end{align}$$&lt;/p&gt;
+&lt;p&gt;This suggest that we can take&lt;/p&gt;
+&lt;p&gt;$$ p(t_1, t_2) = \mathrm{Res}_m( T_1(m+r_1) - k,  T_2(m+r_2) - k ) = 0$$&lt;/p&gt;
+&lt;p&gt;by writing $T_i$ as $2^{244}l_i+t_i$ , where $t_i$ are the low bits that we don&amp;rsquo;t know.
+We can solve $t_1, t_2$ by using standard coppersmith method.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>cuhk ctf 2025</title>
@@ -522,7 +648,7 @@ and factorize it, and then since elliptic curves over $F_p$ is isomorphic to eit
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8caaee;font-weight:bold&#34;&gt;@parallel&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#8caaee&#34;&gt;dlog&lt;/span&gt;(ec, chal_pt, pt, order):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;return&lt;/span&gt; (&lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(pari&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;elllog(ec, chal_pt, pt)), order)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ca9ee6&#34;&gt;return&lt;/span&gt; (&lt;span style=&#34;color:#99d1db&#34;&gt;int&lt;/span&gt;(pari&lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;.&lt;/span&gt;elllog(ec, chal_pt, pt, order)), order)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ca9ee6&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ef9f76&#34;&gt;True&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    chal &lt;span style=&#34;color:#99d1db;font-weight:bold&#34;&gt;=&lt;/span&gt; remote(&lt;span style=&#34;color:#a6d189&#34;&gt;&amp;#39;...&amp;#39;&lt;/span&gt;)
@@ -598,8 +724,10 @@ and factorize it, and then since elliptic curves over $F_p$ is isomorphic to eit
 &lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Initially, I thought the order of cyclic group has to be a prime which had me in dlogging in a group of order ~ $10^{12}$ , thus failing the time constraint (1-min solve).
-I did figured out some ways to make the solve script to run faster without fixing the main logic tho.&lt;/p&gt;&lt;/blockquote&gt;
+I did figured out some ways to make the solve script to run faster without fixing the main logic tho.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
+&lt;li&gt;calling dlog with order (I forgot about it at first also, big mistake)&lt;/li&gt;
 &lt;li&gt;Parallelizing (implemented)&lt;/li&gt;
 &lt;li&gt;Calling pari_ecllog (implemented)&lt;/li&gt;
 &lt;li&gt;Increasing memory in WSL (this speeds up the script up by margins)&lt;/li&gt;
