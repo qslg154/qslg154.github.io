@@ -28,8 +28,8 @@
 
 Let $p, q$ have degree $m, n\geq 1$ and $R$ be an integral domain.
 Consider the linear map $\phi : R_{n-1}[x]\times R_{m-1}[x] \rightarrow R_{a&#43;b-1}[x]$ by:
-$$\phi(r, s) = pr &#43; qs$$
 
+$$\phi(r, s) = pr &#43; qs$$
 Theorem 1
 $\mathrm{Im}\ \phi$  is isomorphic to some $kR_{a&#43;b-1}[x]$ for $k \in R$ if and only if $p, q$ don&rsquo;t have a common factor of positive degree over $Frac(R)$.
 
@@ -368,6 +368,9 @@ $p$ must divide $s$ , but $\deg s &lt; m$ so $s = 0$ . Similarly $r=0$ , we have
 
 
 
+    
+    
+
 
 
 
@@ -497,13 +500,13 @@ $p$ must divide $s$ , but $\deg s &lt; m$ so $s = 0$ . Similarly $r=0$ , we have
 </h2>
 <p>Let $p, q$ have degree $m, n\geq 1$ and $R$ be an integral domain.
 Consider the linear map $\phi : R_{n-1}[x]\times R_{m-1}[x] \rightarrow R_{a+b-1}[x]$ by:
-$$\phi(r, s) = pr + qs$$</p>
-<blockquote>
+</p>
+$$\phi(r, s) = pr + qs$$<blockquote>
 <p><em>Theorem 1</em>
 $\mathrm{Im}\ \phi$  is isomorphic to some $kR_{a+b-1}[x]$ for $k \in R$ if and only if $p, q$ don&rsquo;t have a common factor of positive degree over $Frac(R)$.</p>
 </blockquote>
 <p><em>Proof</em>: If $\phi$ is invertible, then $\phi(r, s) = pr+qs = c$ for some $r, s$ since $\phi$ is surjective. The constant polynomial $c$ assert that no such factor exist. Conversely, if $p, q$ don&rsquo;t have such factor then we can consider the equation $pr = -qs$ , since $p, q$ are coprime over $Frac(R)$,<br>
-$p$ must divide $s$ , but $\deg s &lt; m$ so $s = 0$ . Similarly $r=0$ , we have $\ker \phi = {(0, 0)}$, so $\phi$ is injective, thus is an isomorphism .</p>
+$p$ must divide $s$ , but $\deg s < m$ so $s = 0$ . Similarly $r=0$ , we have $\ker \phi = {(0, 0)}$, so $\phi$ is injective, thus is an isomorphism .</p>
 <p>We can write out the matrix of $\phi$ and calculate its determinant to determine whether $\phi$ is an isomorphism, and whether $p, q$ have a common factor (thus common zero possibly over some field extension)</p>
 <blockquote>
 <p><em>Remark:</em> The condition of common factor over $Frac$ is to prevent issues of non-UFD</p>
@@ -516,23 +519,22 @@ $p$ must divide $s$ , but $\deg s &lt; m$ so $s = 0$ . Similarly $r=0$ , we have
     Defining the resultant
 </div>
 </h2>
-<p>Let $p = a_mx^m+&hellip;+a_0, q = b_n^n+&hellip;+b_0$
-The matrix of $\phi$ , under the basis ${1, x, x^2, &hellip;, x^{m+n-1}}$ is:</p>
-<p>$$M = Mat(\phi)= \begin{pmatrix}
-a_0      &amp; 0           &amp; \cdots &amp; 0          &amp; b_0        &amp; 0              &amp; \cdots &amp; 0       \
-a_1    &amp; a_0       &amp; \cdots &amp; 0           &amp; b_1     &amp; b_0           &amp; \cdots &amp; 0  \
-a_2    &amp; a_1     &amp; \ddots &amp; 0           &amp; b_2     &amp; b_1         &amp; \ddots &amp; 0 \
-\vdots  &amp;\vdots   &amp; \ddots &amp; a_0        &amp; \vdots   &amp;\vdots       &amp; \ddots &amp; b_0  \
-a_m       &amp; a_{m-1} &amp; \cdots &amp; \vdots   &amp; b_n       &amp; b_{n-1}     &amp; \cdots &amp; \vdots\
-0          &amp; a_m       &amp; \ddots &amp;  \vdots  &amp; 0          &amp; b_n          &amp; \ddots &amp;  \vdots  \
-\vdots  &amp; \vdots   &amp; \ddots &amp; a_{m-1}  &amp; \vdots  &amp; \vdots      &amp; \ddots &amp; b_{n-1}   \
-0          &amp; 0          &amp; \cdots  &amp; a_m       &amp; 0           &amp; 0              &amp; \cdots &amp; b_n<br>
-\end{pmatrix}$$</p>
-<blockquote>
+<p>Let $p = a_mx^m+...+a_0, q = b_n^n+...+b_0$
+The matrix of $\phi$ , under the basis $\{1, x, x^2, ..., x^{m+n-1}\}$ is:</p>
+$$M = Mat(\phi)= \begin{pmatrix} 
+a_0      & 0           & \cdots & 0          & b_0        & 0              & \cdots & 0       \\
+a_1    & a_0       & \cdots & 0           & b_1     & b_0           & \cdots & 0  \\
+a_2    & a_1     & \ddots & 0           & b_2     & b_1         & \ddots & 0 \\
+\vdots  &\vdots   & \ddots & a_0        & \vdots   &\vdots       & \ddots & b_0  \\
+a_m       & a_{m-1} & \cdots & \vdots   & b_n       & b_{n-1}     & \cdots & \vdots\\
+0          & a_m       & \ddots &  \vdots  & 0          & b_n          & \ddots &  \vdots  \\
+\vdots  & \vdots   & \ddots & a_{m-1}  & \vdots  & \vdots      & \ddots & b_{n-1}   \\
+0          & 0          & \cdots  & a_m       & 0           & 0              & \cdots & b_n   
+\end{pmatrix}$$<blockquote>
 <p>This is called the <em>Sylvester matrix</em></p>
 </blockquote>
 <p>We can define the resultant of $p, q$: $\mathrm{Res}(p, q) = \det(M)$ , since for any polynomial $f$,
-$f$ has repeated root if and only $f, f&rsquo;$ has common zero, we can define $\mathrm{Disc}(f)$ = $\mathrm{Res}(f, f&rsquo;)$ .</p>
+$f$ has repeated root if and only $f, f'$ has common zero, we can define $\mathrm{Disc}(f)$ = $\mathrm{Res}(f, f')$ .</p>
 <blockquote>
 <p><em>Corollary 2:</em> $Res(p, q) = 0$ if and only $p, q$ share common zeros (possibly over some field extensions)</p>
 </blockquote>
@@ -550,9 +552,11 @@ $f$ has repeated root if and only $f, f&rsquo;$ has common zero, we can define $
 <p>The idea is to use resultant to construct some bivariate polynomial such that when taking resultant regarding to some variable, we have the resultant, which is a single variable polynomial vanish at the points we need.</p>
 <p><em>Proof:</em> let $x, y \in \bar{\mathbb{Q}}$ , then $p(x) = q(y) = 0$ for some $p, q$ $\in \mathbb{Q}[x]$ .
 The polynomial
-$$ r(z) = \mathrm{Res}_x(p(x), q(z-x)) $$
+</p>
+$$ r(z) = \mathrm{Res}_x(p(x), q(z-x)) $$<p>
 has root $x+y$ , and the polynomial
-$$ t(z) = \mathrm{Res}_x(p(x), x^nq(z/x))$$
+</p>
+$$ t(z) = \mathrm{Res}_x(p(x), x^nq(z/x))$$<p>
 has root $xy$ .</p>
 <blockquote>
 <p>Such proof applies for $\bar{\mathbb{Z}}$ also.</p>
@@ -599,10 +603,8 @@ has root $xy$ .</p>
 </span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># print(f&#39;{leak1 = }&#39;)</span>
 </span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># print(f&#39;{leak2 = }&#39;)</span>
 </span></span></code></pre></div><p>We can factor $N$ easily by brute force, and notice that we have</p>
-<p>$$\begin{align} T_i(m+r_i) - k = 0 \pmod{p}\\end{align}$$</p>
-<p>This suggest that we can take</p>
-<p>$$ p(t_1, t_2) = \mathrm{Res}_m( T_1(m+r_1) - k,  T_2(m+r_2) - k ) = 0$$</p>
-<p>by writing $T_i$ as $2^{244}l_i+t_i$ , where $t_i$ are the low bits that we don&rsquo;t know.
+$$\begin{align} T_i(m+r_i) - k = 0 \pmod{p}\\\end{align}$$<p>This suggest that we can take</p>
+$$ p(t_1, t_2) = \mathrm{Res}_m( T_1(m+r_1) - k,  T_2(m+r_2) - k ) = 0$$<p>by writing $T_i$ as $2^{244}l_i+t_i$ , where $t_i$ are the low bits that we don&rsquo;t know.
 We can solve $t_1, t_2$ by using standard coppersmith method.</p>
 
         </div>

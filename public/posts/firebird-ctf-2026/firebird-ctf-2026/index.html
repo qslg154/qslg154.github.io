@@ -7,8 +7,7 @@
 
 
 <html lang="en-us" data-theme="">
-<head>
-	<meta name="generator" content="Hugo 0.152.2">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     
         
 <meta charset="utf-8">
@@ -17,17 +16,103 @@
 <meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="theme-name" content="Anubis2">
 
-<title>qslg154</title>
+<title>Firebird CTF 2026 - qslg154</title>
 
-<meta name="description" content="">
+<meta name="description" content="
+
+    
+        #
+    
+    Intro
+
+
+Played with the team grey bricks, and achieved 8th place overall and 2nd in secondary divison. Our team is also the first team to full solve crypto.
+
+
+    
+        #
+    
+    Crypto
+
+
+
+
+    
+        ##
+    
+    Secure AI Cert Server
+
+
+
+
+    
+        ###
+    
+    Challenge flow
+
+
+
+The server prints out an encrypted certificate $\mathrm{Enc}_k(C)$ using key $k$ , $N$ and $e$, we know some parts of $C$
+
+def cert_generate():
+    cert_data = json.dumps({
+        &#34;alg&#34;: &#34;RSA&#34;,
+        &#34;iss&#34;: &#34;Firebird Chan&#34;,
+        &#34;e&#34;: 65537,
+        &#34;exptime&#34;: exptime, # random
+        &#34;N&#34;: N, # 2048 bits semiprime
+        &#34;sig&#34;: siguature # random
+    })
+    print(&#34;e:&#34;, e)
+    print(&#34;N:&#34;, N)
+    iv, enc_cert = encrypt_cert(cert_data) # DES CBC, 8 bytes block
+    return iv &#43; enc_cert
+
+We need to produce a certificate $C_f$ that $\mathrm{Dec}_k(C_f)$ will be accepted by the server, exptime and sig will be checked
+
+def cert_data_verify(cert_json):
+    assert cert_json[&#34;exptime&#34;] == exptime
+    assert cert_json[&#34;sig&#34;] == siguature
+
+Using the value of $N_f$ and $e_f$ in the json, we need to find $m$ given $c=m^{e_f} \mod{N_f}$
+
+def token_verify(e, N):
+    token = f&#34;This is your verification token {secrets.token_hex(8)}&#34;
+    m = bytes_to_long(token.encode())
+    print(m.bit_length())
+    print(&#34;This is the encryped token used by your certificate:&#34;, encrypt_message(m, e, N)) # rsa
+    user_token = input(&#34;Please provide your verification token: &#34;)
+    return token == user_token
+
+
+    
+        ###
+    
+    Analysing the problem
+
+
+
+We need to do RSA decryption in the last part, so we clearly can&rsquo;t use the server $N, e$
+This suggests we need to somehow forge a certificate without knowing server&rsquo;s $k$ for a easy RSA decryption.
+If we can control one of $e, N$ , then RSA is easy (i.e. $e=1$ or small $N$)
+
+
+
+    
+        ###
+    
+    CBC decryption
+
+
+![image](&quot;./content/posts/Firebird CTF 2026/CBC_decryption.svg&quot;)
+A natural approach is to modify $N$ , but due to CBC&rsquo;s chaining nature, we couldn&rsquo;t do that without modify the previous blocks.">
 
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/index.xml" title="qslg154" />
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="/favicon.png">
+<link rel="icon" type="image/x-icon" href="//localhost:1313/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="//localhost:1313/favicon.png">
 
 
 
@@ -69,12 +154,10 @@
 
     
     
-        
-    
     
 
     
-        <link rel="stylesheet" href="/css/style.min.44f8240afd8df81b52565c4119ac5ae247776c77fc6d7ccf6e101a6c98abfa7a.css" integrity="sha256-RPgkCv2N&#43;BtSVlxBGaxa4kd3bHf8bXzPbhAabJir&#43;no=">
+        <link rel="stylesheet" href="/css/style.4c42aa0abeac804c4933c54677c449cea1f723caae778425d031e98565a0cdef.css" integrity="sha256-TEKqCr6sgExJM8VGd8RJzqH3I8qud4Ql0DHphWWgze8=">
     
 
 
@@ -89,12 +172,10 @@
 
     
     
-        
-    
     
 
     
-        <link rel="stylesheet" href="/css/style.min.c4c04b3ef88e3d619ad4c7ee5e03048422bc55c4fefdc1f07657c1133670aa22.css" integrity="sha256-xMBLPviOPWGa1MfuXgMEhCK8VcT&#43;/cHwdlfBEzZwqiI=">
+        <link rel="stylesheet" href="/css/style.9c1888ebff42c0224ce04dac10cb2c401f1b77f54f78e8d87d73c3bed781c263.css" integrity="sha256-nBiI6/9CwCJM4E2sEMssQB8bd/VPeOjYfXPDvteBwmM=">
     
 
 
@@ -109,12 +190,10 @@
 
     
     
-        
-    
     
 
     
-        <link rel="stylesheet" href="/css/style.min.21c5d8fe0a79d623b0adc1ce4bd4f6dd2c05cd939c9aaaa966ba7186b1464f4d.css" integrity="sha256-IcXY/gp51iOwrcHOS9T23SwFzZOcmqqpZrpxhrFGT00=">
+        <link rel="stylesheet" href="/css/style.acd606c0fce58853afe0248d37bb41acbbcdd8b1aca2412b6c0fa760da0137f3.css" integrity="sha256-rNYGwPzliFOv4CSNN7tBrLvN2LGsokErbA&#43;nYNoBN/M=">
     
 
 
@@ -149,12 +228,10 @@
 
     
     
-        
-    
     
 
     
-        <script src="/js/script.min.08f04d96386c73c9bf4d160333f8f448c05a6e01c06770542ee0e013954ce930.js" type="text/javascript" charset="utf-8" integrity="sha256-CPBNljhsc8m/TRYDM/j0SMBabgHAZ3BULuDgE5VM6TA="></script>
+        <script src="/js/script.672e2309c296e07c18bcd08b28d797a56222ff941d65f308fba3158c44885b14.js" type="text/javascript" charset="utf-8" integrity="sha256-Zy4jCcKW4HwYvNCLKNeXpWIi/5QdZfMI&#43;6MVjESIWxQ="></script>
     
 
 
@@ -184,7 +261,7 @@
                 <div class="header-top">
     <div class="header-top-left">
         <h1 class="site-title noselect">
-    <a href="/">qslg154</a>
+    <a href="//localhost:1313/">qslg154</a>
 </h1>
 
         
@@ -340,13 +417,13 @@
     <nav class="noselect">
         
         
-        <a class="" href="/" title="">Home</a>
+        <a class="" href="//localhost:1313/" title="">Home</a>
         
-        <a class="" href="/about/" title="">About</a>
+        <a class="" href="//localhost:1313/about/" title="">About</a>
         
-        <a class="" href="/tags/" title="">Tags</a>
+        <a class="" href="//localhost:1313/tags/" title="">Tags</a>
         
-        <a class="" href="/posts/" title="">Archive</a>
+        <a class="" href="//localhost:1313/posts/" title="">Archive</a>
         
     </nav>
 
@@ -392,29 +469,90 @@
         </header>
         <main id="main" tabindex="-1">
             
-    <div class="homepage-content">
-        
-    </div>
-
-    <div class="articles h-feed">
-        
-        
-            <article class="post-list h-feed post-card">
-    <div class="post-header">
-        <header>
-            
-            
-            
-            <h1 class="p-name post-title ">
-                <a class="u-url" href="/posts/firebird-ctf-2026/">Firebird CTF 2026</a>
-            </h1>
-        </header>
-        
-
-    </div>
-
     
-        <div class="content post-summary p-summary">
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                
+                
+                
+                <h1 class="p-name post-title ">Firebird CTF 2026</h1>
+                
+
+            </header>
+            
+
+
+
+<div class="post-info noselect">
+    
+        <div class="post-date dt-published">
+            <time datetime="2026-01-26">2026-01-26</time>
+            
+        </div>
+    
+
+    <a class="post-hidden-url u-url" href="/posts/firebird-ctf-2026/firebird-ctf-2026/">/posts/firebird-ctf-2026/firebird-ctf-2026/</a>
+    <a href="//localhost:1313/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
+
+
+    <div class="post-taxonomies">
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+        
+
+  
+  
+
+
+
+
+  
+  
+  
+  <details class="toc noselect">
+    <summary>Table of Contents</summary>
+    <div class="inner"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#crypto">Crypto</a>
+      <ul>
+        <li><a href="#secure-ai-cert-server">Secure AI Cert Server</a></li>
+        <li><a href="#hidden-threads-of-inequalityequality">Hidden Threads of Inequality/Equality</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  </details>
+  
+
+
+
+<script>
+  var toc = document.querySelector(".toc");
+  if (toc) {
+    toc.addEventListener("click", function () {
+      if (event.target.tagName !== "A") {
+        event.preventDefault();
+        if (this.open) {
+          this.open = false;
+          this.classList.remove("expanded");
+        } else {
+          this.open = true;
+          this.classList.add("expanded");
+        }
+      }
+    });
+  }
+</script>
+
+        <div class="content e-content">
             <h2 id="intro" >
 <div>
     <a href="#intro">
@@ -491,7 +629,7 @@
 <ul>
 <li>We need to do RSA decryption in the last part, so we clearly can&rsquo;t use the server $N, e$</li>
 <li>This suggests we need to somehow forge a certificate without knowing server&rsquo;s $k$ for a easy RSA decryption.</li>
-<li>If we can control one of $e, N$ , then RSA is easy.</li>
+<li>If we can control one of $e, N$ , then RSA is easy (i.e. $e=1$ or small $N$)</li>
 </ul>
 <h4 id="cbc-decryption" >
 <div>
@@ -501,260 +639,75 @@
     CBC decryption
 </div>
 </h4>
-<p><img src="/images/CBC_decryption.svg" alt="image">
+<p>![image](&quot;./content/posts/Firebird CTF 2026/CBC_decryption.svg&quot;)
 A natural approach is to modify $N$ , but due to CBC&rsquo;s chaining nature, we couldn&rsquo;t do that without modify the previous blocks.</p>
-        </div>
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-
-<div class="post-info noselect">
-    
-        <div class="post-date dt-published">
-            <time datetime="2026-01-26">2026-01-26</time>
-            
-        </div>
-    
-
-    <a class="post-hidden-url u-url" href="/posts/firebird-ctf-2026/">/posts/firebird-ctf-2026/</a>
-    <a href="/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
-
-
-    <div class="post-taxonomies">
-        
-        
-        
-    </div>
-</div>
-
-</article>
-
-        
-            <article class="post-list h-feed post-card">
-    <div class="post-header">
-        <header>
-            
-            
-            
-            <h1 class="p-name post-title ">
-                <a class="u-url" href="/posts/resultant-notes/">Resultant Notes</a>
-            </h1>
-        </header>
-        
-
-    </div>
-
-    
-        <div class="content post-summary p-summary">
-            <h2 id="multiplication-as-linear-map" >
+<p>However, we also see that IV is independent from the decryption function, suggesting we can modify the first block?
+Moreover, we can also remove the first $i$ blocks if we set IV = $B_{i-1}$ , The ciphertext will be decrypted in the same way with the first $i$ block of plaintext removed.</p>
+<p>With this in mind, we can remove everything before <code>e&quot;: 6553</code> and set it to <code>{   &quot;e&quot;:</code> by choosing an appropriate IV , the resulting json will look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>{   <span style="color:#a6d189">&#34;e&#34;</span>:
+</span></span><span style="display:flex;"><span><span style="color:#ef9f76">7</span>, <span style="color:#a6d189">&#34;expt</span>
+</span></span><span style="display:flex;"><span>ime<span style="color:#a6d189">&#34;: 17</span>
+</span></span><span style="display:flex;"><span><span style="color:#ef9f76">69255639</span>
+</span></span><span style="display:flex;"><span>, <span style="color:#a6d189">&#34;N&#34;</span>: <span style="color:#ef9f76">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#99d1db;font-weight:bold">...</span>
+</span></span></code></pre></div><p>The rest is just RSA stereotyped message.</p>
+<h4 id="solve-script" >
 <div>
-    <a href="#multiplication-as-linear-map">
-        #
+    <a href="#solve-script">
+        ###
     </a>
-    Multiplication as linear map
+    Solve script
 </div>
-</h2>
-<p>Let $p, q$ have degree $m, n\geq 1$ and $R$ be an integral domain.
-Consider the linear map $\phi : R_{n-1}[x]\times R_{m-1}[x] \rightarrow R_{a+b-1}[x]$ by:
-</p>
-$$\phi(r, s) = pr + qs$$<blockquote>
-<p><em>Theorem 1</em>
-$\mathrm{Im}\ \phi$  is isomorphic to some $kR_{a+b-1}[x]$ for $k \in R$ if and only if $p, q$ don&rsquo;t have a common factor of positive degree over $Frac(R)$.</p>
-</blockquote>
-<p><em>Proof</em>: If $\phi$ is invertible, then $\phi(r, s) = pr+qs = c$ for some $r, s$ since $\phi$ is surjective. The constant polynomial $c$ assert that no such factor exist. Conversely, if $p, q$ don&rsquo;t have such factor then we can consider the equation $pr = -qs$ , since $p, q$ are coprime over $Frac(R)$,<br>
-$p$ must divide $s$ , but $\deg s < m$ so $s = 0$ . Similarly $r=0$ , we have $\ker \phi = {(0, 0)}$, so $\phi$ is injective, thus is an isomorphism .</p>
-        </div>
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-        <script>
-  MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$','$$'], ['\\[', '\\]']],
-      processEscapes: true,
-      processEnvironments: true
-    },
-    options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-    }
-  };
-
-  window.addEventListener('load', (event) => {
-      document.querySelectorAll("mjx-container").forEach(function(x){
-        x.parentElement.classList += 'has-jax'})
-    });
-
-</script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    
-
-    
-
-
-
-<div class="post-info noselect">
-    
-        <div class="post-date dt-published">
-            <time datetime="2026-01-14">2026-01-14</time>
-            
-        </div>
-    
-
-    <a class="post-hidden-url u-url" href="/posts/resultant-notes/">/posts/resultant-notes/</a>
-    <a href="/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
-
-
-    <div class="post-taxonomies">
-        
-        
-        
-    </div>
-</div>
-
-</article>
-
-        
-            <article class="post-list h-feed post-card">
-    <div class="post-header">
-        <header>
-            
-            
-            
-            <h1 class="p-name post-title ">
-                <a class="u-url" href="/posts/cuhk25/">cuhk ctf 2025</a>
-            </h1>
-        </header>
-        
-
-    </div>
-
-    
-        <div class="content post-summary p-summary">
-            <p>Played the ctf with the team <em>Grey Bricks</em>, and we solved all crypto, I also solved some rev and pwn challs.</p>
-<h2 id="schrödingers-encryption" >
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">sage.all</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">from</span> <span style="color:#ef9f76">pwn</span> <span style="color:#81c8be">import</span> <span style="color:#99d1db;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span>r <span style="color:#99d1db;font-weight:bold">=</span> remote(<span style="color:#a6d189">&#34;roasted-chal.firebird.sh&#34;</span>, <span style="color:#ef9f76">36042</span>)
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#a6d189">&#34;N:&#34;</span>)
+</span></span><span style="display:flex;"><span>N <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(r<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(N)
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#a6d189">&#34;Your generated CERT:&#34;</span>)
+</span></span><span style="display:flex;"><span>dat <span style="color:#99d1db;font-weight:bold">=</span> base64<span style="color:#99d1db;font-weight:bold">.</span>b64decode(r<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>strip())
+</span></span><span style="display:flex;"><span>iv, cert_enc <span style="color:#99d1db;font-weight:bold">=</span> dat[:<span style="color:#ef9f76">8</span>], dat[<span style="color:#ef9f76">8</span>:]
+</span></span><span style="display:flex;"><span>prev_b <span style="color:#99d1db;font-weight:bold">=</span> cert_enc[<span style="color:#ef9f76">32</span>:<span style="color:#ef9f76">40</span>]
+</span></span><span style="display:flex;"><span>str1 <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#e78284">b</span><span style="color:#a6d189">&#34;&#34;&#34;e&#34;: 6553&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>str2 <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#e78284">b</span><span style="color:#a6d189">&#34;&#34;&#34;{   &#34;e&#34;:&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>iv_forge <span style="color:#99d1db;font-weight:bold">=</span> xor(str2, xor(prev_b, str1))
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#a6d189">&#34;Enter your encrypted CERT data: &#34;</span>)
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>sendline(base64<span style="color:#99d1db;font-weight:bold">.</span>b64encode(iv_forge<span style="color:#99d1db;font-weight:bold">+</span>cert_enc[<span style="color:#ef9f76">40</span>:]))
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>recvuntil(<span style="color:#a6d189">&#34;s the encryped token used by your certificate: &#34;</span>)
+</span></span><span style="display:flex;"><span>tok_pow <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span>(r<span style="color:#99d1db;font-weight:bold">.</span>recvline()<span style="color:#99d1db;font-weight:bold">.</span>strip()<span style="color:#99d1db;font-weight:bold">.</span>decode())
+</span></span><span style="display:flex;"><span>r<span style="color:#99d1db;font-weight:bold">.</span>sendline(solve_tok(tok_pow, N)) <span style="color:#737994;font-style:italic"># solve the hex token</span>
+</span></span><span style="display:flex;"><span><span style="color:#99d1db">print</span>(r<span style="color:#99d1db;font-weight:bold">.</span>recvall())
+</span></span></code></pre></div><h3 id="hidden-threads-of-inequalityequality" >
 <div>
-    <a href="#schr%c3%b6dingers-encryption">
-        #
+    <a href="#hidden-threads-of-inequalityequality">
+        ##
     </a>
-    Schrödinger&rsquo;s Encryption
+    Hidden Threads of Inequality/Equality
 </div>
-</h2>
-<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81c8be">import</span> <span style="color:#ef9f76">secrets</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">andcryption</span>(message: <span style="color:#99d1db">bytes</span>, key: <span style="color:#99d1db">bytes</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">bytes</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> <span style="color:#99d1db">len</span>(message) <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">len</span>(key)
-</span></span><span style="display:flex;"><span>    n <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">len</span>(message)
-</span></span><span style="display:flex;"><span>    m, k <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(message, <span style="color:#a6d189">&#34;big&#34;</span>), <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(key, <span style="color:#a6d189">&#34;big&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>to_bytes(m <span style="color:#99d1db;font-weight:bold">&amp;</span> k, n, <span style="color:#a6d189">&#34;big&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">orcryption</span>(message: <span style="color:#99d1db">bytes</span>, key: <span style="color:#99d1db">bytes</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">bytes</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">assert</span> <span style="color:#99d1db">len</span>(message) <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#99d1db">len</span>(key)
-</span></span><span style="display:flex;"><span>    n <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">len</span>(message)
-</span></span><span style="display:flex;"><span>    m, k <span style="color:#99d1db;font-weight:bold">=</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(message, <span style="color:#a6d189">&#34;big&#34;</span>), <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>from_bytes(key, <span style="color:#a6d189">&#34;big&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#99d1db">int</span><span style="color:#99d1db;font-weight:bold">.</span>to_bytes(m <span style="color:#99d1db;font-weight:bold">|</span> k, n, <span style="color:#a6d189">&#34;big&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">def</span> <span style="color:#8caaee">schrodingers_cat</span>(message: <span style="color:#99d1db">str</span>) <span style="color:#99d1db;font-weight:bold">-&gt;</span> <span style="color:#99d1db">str</span>:
-</span></span><span style="display:flex;"><span>    key <span style="color:#99d1db;font-weight:bold">=</span> secrets<span style="color:#99d1db;font-weight:bold">.</span>token_bytes(<span style="color:#99d1db">len</span>(message))
-</span></span><span style="display:flex;"><span>    encrypted <span style="color:#99d1db;font-weight:bold">=</span> secrets<span style="color:#99d1db;font-weight:bold">.</span>choice([andcryption, orcryption])(message<span style="color:#99d1db;font-weight:bold">.</span>encode(), key)
-</span></span><span style="display:flex;"><span>    <span style="color:#ca9ee6">return</span> <span style="color:#e78284">f</span><span style="color:#a6d189">&#34;0x</span><span style="color:#a6d189">{</span><span style="color:#99d1db">bytes</span><span style="color:#99d1db;font-weight:bold">.</span>hex(encrypted)<span style="color:#a6d189">}</span><span style="color:#a6d189">&#34;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># we can call schrodingers_cat on flag indefinitely</span>
-</span></span></code></pre></div><p>An oracle $f$ is given:
-</p>
+</h3>
+<p>TBD</p>
+
         </div>
-    
-    
+
+    </article>
+
     
     
 
     
-    
-    
-    
-    
-        <script>
-  MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$','$$'], ['\\[', '\\]']],
-      processEscapes: true,
-      processEnvironments: true
-    },
-    options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-    }
-  };
-
-  window.addEventListener('load', (event) => {
-      document.querySelectorAll("mjx-container").forEach(function(x){
-        x.parentElement.classList += 'has-jax'})
-    });
-
-</script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    
-
-    
-
-
-
-<div class="post-info noselect">
-    
-        <div class="post-date dt-published">
-            <time datetime="2025-10-01">2025-10-01</time>
-            
-        </div>
-    
-
-    <a class="post-hidden-url u-url" href="/posts/cuhk25/">/posts/cuhk25/</a>
-    <a href="/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
-
-
-    <div class="post-taxonomies">
         
         
-        
-    </div>
-</div>
-
-</article>
-
-        
-        
-        
-
-    </div>
+    
 
     
+
     
+        
+
+
     
+
     
 
     
@@ -798,7 +751,7 @@ $p$ must divide $s$ , but $\deg s < m$ so $s = 0$ . Similarly $r=0$ , we have $\
 
     <p class="h-card vcard">
 
-    <a href=/ class="p-name u-url url fn" rel="me">map[name:qslg154]</a>
+    <a href=//localhost:1313/ class="p-name u-url url fn" rel="me">map[name:qslg154]</a>
 
     
 

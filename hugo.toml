@@ -42,3 +42,14 @@ unsafe = true # Enable unsafe mode to have a better experience
 
 [markup.highlight]
 style              = 'catppuccin-frappe' # Find more style at here: https://swapoff.org/chroma/playground/
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['$$', '$$']]
+          inline = [['$', '$']]
+[params]
+  math = true

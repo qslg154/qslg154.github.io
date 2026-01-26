@@ -353,7 +353,34 @@
 
 
 
+    
+    
 
+
+
+
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 
@@ -376,6 +403,40 @@
         
         
 
+        
+            <div class="post-short-list h-entry">
+                <div class="post-header">
+                    <header>
+                        <h2 class="p-name post-title"><a class="u-url" href="/posts/firebird-ctf-2026/">Firebird CTF 2026</a></h2>
+                        
+
+                    </header>
+                </div>
+                
+                
+
+
+
+<div class="post-info noselect">
+    
+        <div class="post-date dt-published">
+            <time datetime="2026-01-26">2026-01-26</time>
+            
+        </div>
+    
+
+    <a class="post-hidden-url u-url" href="/posts/firebird-ctf-2026/">/posts/firebird-ctf-2026/</a>
+    <a href="/" class="p-name p-author post-hidden-author h-card" rel="me">map[name:qslg154]</a>
+
+
+    <div class="post-taxonomies">
+        
+        
+        
+    </div>
+</div>
+
+            </div>
         
             <div class="post-short-list h-entry">
                 <div class="post-header">
